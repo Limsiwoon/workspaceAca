@@ -1,0 +1,108 @@
+===========================================================
+----------------------------------------------------------------------------------------------------
+** DataBase 
+* 확인 => drop database javadb;
+*  만들기   => create database mydb ;
+*  확인하기 => show databases ; 
+	       => 설치시 자동생성: test , mysql(mysql의 다양한 정보 저장)
+
+*  사용하기 => use mydb ;
+*  현재 사용중인 DB 표시하기 => select database() ;
+*  삭제하기 => drop database db1 ;
+               => select database() ;
+
+-----------------------------------------------------------------------------------
+** Student & Jo 
+create table student(
+snum int(10) auto_increment primary key,
+sname varchar(10) not null,
+age int(3) not null,
+info varchar(30),
+jno int(1) references jo(jno)  
+);
+
+create table jo(
+jno int Primary Key,
+jname varchar(10) not null,
+captain int(10) not null,
+project varchar(20), 
+slogan varchar(30)  
+);
+
+-----------------------------------------------------------------------------------
+*** web02 를 위한 Table 작업
+
+1) Member Create  & Insert
+=> Create
+drop table member;
+
+create  table member (    
+id varchar(10) primary key ,
+password varchar(10) not null,
+name varchar(30),
+age int(3) ,
+jno int(1),
+info varchar(30),
+point float(7,2),
+birthday varchar(10),
+rid varchar(10)
+) ; 
+
+=> Insert
+-> column 갯수와 Type 이 다르면 column 명 지정해야함  
+
+insert into member(id, password, name, age, jno, info, point)
+select sno, sno, name, age, jno, info, point 
+from student ;  
+
+select * from member;
+update member set password='12345!' , birthday='1999-09-09' ;
+
+select * from member;
+
+=> 각자 id 와 rid 수정문 올려주세요~
+update member set id='banana', rid='green' where id='17' ;
+
+select * from member;
+
+
+2) Jo 
+=> captain 컬럼  varchar(10) 으로 수정
+=> Data update
+	
+select * from jo;
+
+==============================================
+
+3) Java Code : 프로젝트 Web02
+
+=> MemberVO, MemberDAO, MemberService
+=> Controller, View
+=> memberList, memberDetail
+
+4) 로그인, 로그아웃 구현
+=> loginForm.jsp , 컨트롤러 C03_mLogin,  컨트롤러 C03_mLogout
+=> 로그인 성공 : index.html -> index.jsp  : ~~님 안녕하세요 ~~, 로그인후 메뉴로
+=> 로그인 실패 : loginForm 으로 재로그인 유도
+
+5) 회원가입 구현
+=> index.jsp : 메뉴추가 ( JoinF -> joinForm.jsp )
+=> joinForm.jsp : action="/Web02/mjoin"
+=> 컨트롤러 : C05_mJoin.java 
+		-> 성공 : 로그인 유도 ( loginForm.jsp )
+		-> 실패 : 재가입 유도 ( joinForm.jsp )
+
+6) 내정보 수정하기
+=> 메뉴 추가
+=> 수정 -> 내정보를 표시한 (Controller)  수정가능한  Form :  updateForm.jsp
+=> 컨트롤러 : C06_mUpdatejava 
+		-> 성공 : 내정보 표시 ( memberDetail.jsp )
+		-> 실패 : 재수정 유도 ( updateForm.jsp )
+
+7) 회원탈퇴
+=> 메뉴 추가
+=> 삭제 컨트롤러 : C07_mDelete.java 
+		-> 성공 : index.jsp ( message : 탈퇴 성공 !!! )
+		-> 실패 : index.jsp ( message : 탈퇴 실패 !!! )
+ 
+=========================================================
