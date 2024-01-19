@@ -19,15 +19,17 @@
 	
 	<img alt="life is flower" src="images/pink01.png" width=200px height=200px>
 	<hr>
-	&nbsp;	
+
 	<c:if test="${!empty sessionScope.loginName}">
-		<a href="/web02/detail">MyInfo</a>&nbsp;
-		<a href="/web02/logout">Logout</a> <br>
+		<a href="/web02/mdetail">MyInfo</a>&nbsp;
+		<a href="/web02/mdetail?jCode=U">내정보 수정</a>&nbsp;
+		<a href="/web02/logout">Logout</a>&nbsp;
+		<a href="/web02/mdelete">탈퇴</a>&nbsp;
 	</c:if>
 	<c:if test="${empty sessionScope.loginName}">
-	&nbsp;<a href="/web02/member/loginForm.jsp">Login</a> 
-	&nbsp;<a href="/web02/member/joinForm.jsp">Login</a>
+		<a href="/web02/member/loginForm.jsp">Login</a>&nbsp; 
+		<a href="/web02/member/joinForm.jsp">Join</a>&nbsp; 
 	</c:if>
-	&nbsp;<a href="/web02/mlist">Mlist</a>
+	<br><a href="/web02/mlist">Mlist</a>
 </body>
 </html>

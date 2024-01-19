@@ -71,7 +71,7 @@ public class MemberDAO {
 	// 3) selectOne===================================================================
 
 	public MemberDTO selectOne(String id) {
-		sql = "select * from member where id = " + id;
+		sql = "select * from member where id = ?";
 		try {
 			pst = cn.prepareStatement(sql);
 			pst.setString(1, id);
@@ -97,7 +97,7 @@ public class MemberDAO {
 
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println(" ** joList Exception => " + e.toString());
+			System.out.println(" ** selectOne Exception => " + e.toString());
 			return null;
 		}
 	} // selectOne
