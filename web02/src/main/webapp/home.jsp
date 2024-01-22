@@ -31,5 +31,6 @@
 		<a href="/web02/member/joinForm.jsp">Join</a>&nbsp; 
 	</c:if>
 	<br><a href="/web02/mlist">Mlist</a>
+	<br><a href="/web02/mlist.fo">MlistFo</a>
 </body>
 </html>
