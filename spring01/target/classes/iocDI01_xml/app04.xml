@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="sstv" class="iocDI01_xml.SsTVsi" lazy-init="true"/>
+	
+	
+	<!-- ** 2) IOC/DI -> 생성자 주입 **  -->
+	<bean id="lgtv" class="iocDI01_xml.LgTVsi" lazy-init="true">
+		<constructor-arg name="color" value="Gold"/>
+		<constructor-arg name="price" value="12345000"/>
+		<constructor-arg index="0" ref="spb"/>
+	</bean>
+	<bean id="spa" class="iocDI01_xml.SpeakerA" lazy-init="true" />
+	<bean id="spb" class="iocDI01_xml.SpeakerB" lazy-init="true" />
+	
+	<!-- ** 3) IOC/DI -> setter 주입 ** -->
+
+	<bean id="aitv" class="iocDI01_xml.AiTVsi" lazy-init="true">
+		<property name="speaker" ref="spa" />
+		<property name="color" value="silver" />
+		<property name="price" value="789000" />
+	</bean>
+</beans>
