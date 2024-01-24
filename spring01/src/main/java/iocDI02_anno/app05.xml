@@ -8,5 +8,8 @@
 <!--  -->
 <context:component-scan base-package="iocDI02_anno"/>
 
+<!-- xml 과 @병행 TEST -->
+<bean class="iocDI02_anno.Speaker" lazy-init="true" />
+<!-- <bean id = "spa" class="iocDI02_anno.SpeakerA" lazy-init="true" /> -->
 
 </beans>

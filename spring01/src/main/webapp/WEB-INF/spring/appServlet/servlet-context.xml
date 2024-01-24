@@ -21,14 +21,22 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="com.ncs.spring01" />
-	
+	<context:component-scan base-package="com.ncs.spring01, model, service" />
+	<!-- 패키지 를 찾을 수 있도록 연동 -->
 	
 	<!-- 핸들러 맵핑(각 클래스를 연결해주는 것) 역할 -->
-	
-	   <!-- * spring DispatcherServlet Test 1단계 **
-      => xml 적용 ( 2단계 : @ 적용 )
-      1. HandlerMapping Bean 등록      -->      
+	  
+    <!-- * spring DispatcherServlet Test 1단계 **
+      		=> xml 적용 ( 2단계 : @ 적용 )
+     
+      1. HandlerMapping Bean 등록      
+     	 => property: 맴버변수 mappings 값 Setter 주입 
+     	 => props (spring01~~.ppt 48p)
+        	 - mappings 의 Type이 콜렉션의 Properties
+       		 - Properties 의 값을 할당하는 Tag
+       	  	 - 콜렉션의 Properties는 
+           		(String, String) 형태로 저장하는 Map보다 단순화된 컬렉션
+      -->
    <beans:bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
       <beans:property name="mappings">
          <beans:props>
