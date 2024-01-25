@@ -14,10 +14,15 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import domain.MemberDTO;
 
-@Component
+
+
+
+//@Component
+@Repository
 public class MemberDAO {
 
 	// 1) 전역변수 정의

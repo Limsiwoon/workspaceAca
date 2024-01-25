@@ -47,7 +47,7 @@
 </c:if>
 </table>
 <hr>
-<a href="/web02/home.jsp">Home</a> 
+<a href="home">Home</a> 
 <!-- 서블릿으로 가는 것이 아니기 때문에,  -->
 <a href="">이전으로</a>
 </body>
