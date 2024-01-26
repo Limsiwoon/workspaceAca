@@ -17,6 +17,7 @@ public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
+	// home이라는 요청이 들어오면, @RequestMapping가 받아서, 아래를 실행하도록 하는 것. 
 	@RequestMapping(value = {"/","/home"} , method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);

@@ -17,7 +17,7 @@
 	<h3>${sessionScope.loginName}님 안녕! Hello? <br> 로그인 해줘서 고마워. 약속대로 마스크 벗었어</h3><hr>
 	<img alt="마스크벗음" src="/spring02/resources/images/basicman4.png" width=300px height=300px>
 </c:if>
-<c:if test="${empty sessionScope.loginID}">
+<c:if test="${empty sessionScope.loginID && empty requestScope.message}">
 	<h3>안녕? Hello? Spring_MVC02에 잘 왔어! <br> 마스크를 벗기고싶다면 로그인 부탁해! <br></h3><hr>
 	<img alt="마스크씀" src="/spring02/resources/images/basicman1.jpg" width=300px height=300px>
 </c:if>
@@ -41,6 +41,7 @@
 </c:if>
 <hr>
 	&nbsp;<a href="member/memberList">MList</a>
+	&nbsp;<a href="jo/joList">JoList</a>
 </body>
 
 

@@ -139,6 +139,7 @@ public class MemberDAO {
 
 		try {
 			pst = cn.prepareStatement(sql);
+			
 			pst.setString(1, dto.getPassword());
 			pst.setString(2, dto.getName());
 			pst.setInt(3, dto.getAge());
