@@ -86,21 +86,31 @@ public class JoController {
 		return uri;
 	}
 	
-//	
-//	// 5. joDelete
-//	@RequestMapping(value="/joinsert", method = RequestMethod.POST )
-//	public String joinsert(RedirectAttributes rttr , @RequestParam("joC") int jno) {
-//		String uri= "redirect:jo/joList";
-//		
-//		if (joService.joDelete( jno ) > 0 ) {
-//			rttr.addFlashAttribute("message", "hello! 조 삭제됐다 이누마");
-//		} else {
-//			uri = "jo/detail";
-//		}
-//		return uri;		
+	
+	// 5. joDelete
+	@RequestMapping(value="/joDelete", method = RequestMethod.GET )
+	public void joDelete(Model model, @RequestParam("joC") int jno) {
+		model.addAttribute("jinfo", joService.joSelectOne(jno) );
+	}
+//	@RequestMapping(value="/joDelete", method = RequestMethod.GET )
+//	public void joDelete() {
 //	}
-//	
-//	
+	
+	@RequestMapping(value="jdel")
+	public String jdel(RedirectAttributes rttr , @RequestParam("joC") int jno) {
+		String uri= "redirect:/home";
+		
+		if (joService.joDelete( jno ) > 0 ) {
+			System.out.println("삭제됨");
+			rttr.addFlashAttribute("message", "hello! 조 삭제됐다 이누마");
+		} else {
+			System.out.println("삭제안됨");
+			uri = "jo/joList";
+		}
+		return uri;		
+	}
+	
+	
 	
 	
 	

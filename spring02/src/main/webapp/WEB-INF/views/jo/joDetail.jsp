@@ -34,7 +34,7 @@
 
 </table>
 &nbsp;<a href="joDetail?joC=1${jinfo.jno}">조 수정하기</a>&nbsp;
-&nbsp;<a href="joDetail?joC=2${jinfo.jno}">조 삭제하기</a>&nbsp;
+&nbsp;<a href="joDelete?joC=${jinfo.jno}">조 삭제하기</a>&nbsp;
 <hr>
 &nbsp;<a href="/spring02/home">HOME</a>&nbsp;
 &nbsp;<a href="javascript:history.go(-1)">이전으로 돌아가기</a>&nbsp;
