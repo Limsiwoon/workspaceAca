@@ -1,0 +1,248 @@
+@charset "UTF-8";
+
+*{
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   font-size: 11px;
+}
+
+input:focus, textarea{outline:none;}
+
+select{
+   background-color: transparent;
+   cursor: pointer;
+}
+
+button {
+   height: 39px;
+   border: 0px;
+   background-color: #fff;
+   border: 1px solid #fff;
+   cursor: pointer;
+}
+
+.tool_bar_top button:hover {
+   background: #d6d6d6;
+   border: 1px solid #d6d6d6;
+   border-radius:6px;
+   cursor: pointer;
+}
+
+.font_tool_wrap button:nth-child(n+4){
+   width: 28px;
+}
+
+.list_n_aline_tool_wrap button:nth-last-child(-n+4){
+   width:  28px;
+}
+
+.functional_tool_button button{
+   width: 28px;
+}
+
+.container{
+   padding: 25px 20px 50px 20px;
+}
+
+.content{
+   max-width: 1000px;
+   margin: 0 auto;
+}
+
+.board_wrap{
+   padding: 10px 0 0;
+   border: 1px solid #d5d5d5;
+   word-break: break-all;
+   word-wrap: break-word;
+   background-color: #fff;
+
+}
+
+.title_wrap{
+   display: grid;
+   grid-template-columns: 1fr 9fr;
+   border-bottom: 1px solid #d5d5d5;
+}
+
+.title{
+   vertical-align: top;
+   text-align: left;
+   padding: 10px 0px 12px 13px;
+   color: #757575;
+}
+
+.title>strong{
+   display: inline-block;
+   height: 20px;
+}
+
+.category_list_select_box{
+   margin: 0 0 5px;
+   width: 99%;
+   border: 1px solid #dfdfdf;
+   vertical-align: middle;
+   height: 36px;
+   padding: 0 5px;
+}
+
+.list_n_aline_tool_wrap{
+   display: inline-block;
+}
+
+.etc_tool_wrap{
+   display: inline-block;
+}
+
+.title_input_box>input{
+   margin: 0 0 5px;
+   width: 99%;
+   border: 1px solid #dfdfdf;
+   vertical-align: middle;
+   height: 36px;
+   padding: 0 5px;
+}
+
+.tool_bar_top{
+   display: flex;
+   justify-content: space-between;
+   padding: 1px;
+   align-items: center;
+   height: 40px;
+}
+
+.tool_bar_top button{
+   transition: all 0.2s ease-in;
+}
+
+.font_tool_wrap{
+   display: inline-block;
+   height: 40px;
+   margin-left: 5px;
+}
+
+.fontImpotance_select_box,.fontSize_select_box,.fontStyle_select_box{
+   width: 80px;
+   font-weight: normal;
+   border: none;
+   vertical-align: middle;
+   height: 100%;
+}
+
+.list_tool_wrap{
+   display: flex;
+   justify-content: space-between;
+}
+
+
+
+#list_button,#list_button3{
+   border-top-right-radius: 0px;
+   border-bottom-right-radius: 0px;
+}
+
+#list_button2,#list_button4{
+   margin-left:-2px;
+   width: 10px;
+   border-top-left-radius: 0px;
+   border-bottom-left-radius: 0px;
+}
+
+.functional_tool_button{
+   margin-right: 9px;
+}
+
+.main_text_line{
+   display: block;
+   content: "";
+   margin-left: 9px;
+   margin-right: 9px;
+   background: #efefef;
+   height: 1px;
+}
+
+textarea{
+   border: none;
+   height: 500px;
+   width: 100%;
+}
+
+.tool_bar_bottom{
+   border-bottom: 1px solid #d5d5d5;
+   border-top: 1px solid #d5d5d5;
+   text-align: right;
+}
+
+.letter_num{
+   display: inline-block;
+   padding: 10px;
+   color: #999;
+}
+
+.letter_count{
+   display: inline-block;
+   padding: 0 5px;
+}
+
+.attach_block_wrap>div{
+   display: grid;
+   grid-template-columns: 1fr 9fr;
+   border-top: 1px solid #d5d5d5;
+   padding: 10px;
+}
+
+.attach_block_wrap>div>span,input{
+   color: #757575;
+}
+
+#url_block>input,#password_block>input{
+   border: 1px solid #d6d6d6;
+}
+
+#url_block>div>span,#password_block>div>span{
+   display: block;
+   color: #757575;
+   padding-top: 7px;
+}
+
+#url_block>input,#password_block>input{
+   border: 1px solid #d6d6d6;
+   height: 30px;
+}
+
+#url_block,#password_block{
+   padding: 10px;
+}
+
+.push_cancel_wrap{
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+   padding-top: 10px;
+}
+
+.push_cancel_wrap input,.container a{
+   border: 1px solid #000;
+   cursor: pointer;
+}
+
+
+#push_button,#cancel_button{
+   border: 1px solid #d6d6d6;
+   height: 30px;
+}
+
+#push_button{
+   background-color: #000;
+   color: white;
+}
+
+.font_tool_wrap button:focus, .list_tool_wrap button:focus,.functional_tool_button button:focus{
+   color: cadetblue; 
+}
+
+body a{
+   display: flex;
+   text-decoration: none;
+   align-items: center;
+   justify-content: center;
+}

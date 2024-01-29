@@ -11,14 +11,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ncs.spring02.domain.JoDTO;
+import com.ncs.spring02.domain.MemberDTO;
 import com.ncs.spring02.service.JoService;
+import com.ncs.spring02.service.MemberService;
+
+import lombok.AllArgsConstructor;
 
 @Controller
 @RequestMapping(value = "/jo")
+@AllArgsConstructor
+// => 모든 멤버변수를 초기화하는 생성자 자동 추가 & 사용
+//	  그러므로 아래의 @Autowired 는 생략가능하다. 
 public class JoController {
 	
-	@Autowired(required = false)
+	//@Autowired(required = false)
 	JoService joService;
+	//@Autowired(required = false)
+	MemberService memberService;
+	
 	// 1 ) joSelectList
 	@RequestMapping(value="/joList", method = RequestMethod.GET)
 	public void joList(Model model) {
@@ -34,16 +44,20 @@ public class JoController {
 		String uri ="jo/joDetail";
 		//2. service 처리
 		
-		if(jno>10) {
+		if(jno>100) {
 			System.out.println("조업데이트감");
 			
 			uri = "jo/joUpdate";
-			jno -= 10;		
+			jno -= 100;		
 		}
 
 		model.addAttribute("jinfo", joService.joSelectOne(jno) );
 		
 		System.out.println("조업데이트 안감");
+		
+		// 조원 출력하기.
+		model.addAttribute("banana2",memberService.selectOne2(jno) );
+		System.out.println(memberService.selectOne2(jno));
 		return uri;
 		
 	}

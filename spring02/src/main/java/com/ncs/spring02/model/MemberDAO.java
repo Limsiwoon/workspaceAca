@@ -106,6 +106,48 @@ public class MemberDAO {
 		}
 	} // selectOne
 
+	//~~~~~~~~~~~~~~selectOne2
+
+	public List<MemberDTO> selectOne2(int jno) {
+		sql = "select * from member where jno = ?";
+		List<MemberDTO> list = new ArrayList<MemberDTO>();
+
+		try {
+			
+			pst = cn.prepareStatement(sql);
+			pst.setInt(1,jno);
+			rs = pst.executeQuery();
+			
+			// 결과 존재 여부
+			if (rs.next()) {
+				do { // 예약어 혹은 명령어
+					MemberDTO dto = new MemberDTO();  
+					dto.setId(rs.getString(1));
+					dto.setPassword(rs.getString(2));
+					dto.setName(rs.getString(3));
+					dto.setAge(rs.getInt(4));
+					dto.setJno(rs.getInt(5));
+					dto.setInfo(rs.getString(6));
+					dto.setPoint(rs.getDouble(7));
+					dto.setBirthday(rs.getString(8));
+					dto.setRid(rs.getString(9));
+
+					list.add(dto); // list에 dto객체 주소를 추가함.
+				} while (rs.next());
+				System.out.println(list);
+				return list;
+			} else {
+				// 존재X
+				return null;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(" ** SelectList Exception => " + e.toString());
+			return null;
+		}
+	} // selectOne2
+	
+	
 	
 	// 4) insert=============================================================
 	// => 모든 컬럼 입력 

@@ -33,7 +33,43 @@
 </c:if>
 
 </table>
-&nbsp;<a href="joDetail?joC=1${jinfo.jno}">조 수정하기</a>&nbsp;
+<hr>
+<table border="1" style="width:100%">
+<tr bgcolor="NavajoWhite">
+	<th>ID</th>
+	<th>Password</th>
+	<th>Name</th>
+	<th>Age</th>
+	<th>Jno</th>
+	<th>Info</th>
+	<th>Point</th>
+	<th>Birthday</th>
+	<th>추천인</th>
+</tr>
+<c:if test="${!empty requestScope.banana2}">
+<c:forEach var="banana2" items="${requestScope.banana2}">
+	<tr>
+		<td>${banana2.id}</td>
+		<td>${banana2.password}</td>
+		<td>${banana2.name}</td>
+		<td>${banana2.age}</td>
+		<td>${banana2.jno}</td>
+		<td>${banana2.info}</td>
+		<td>${banana2.point}</td>
+		<td>${banana2.birthday}</td>
+		<td>${banana2.rid}</td>
+	</tr>
+</c:forEach>
+</c:if>
+
+<c:if test="${empty requestScope.banana2}">
+	<tr><td colspan="9">!!출력할 데이터 없습미다!!</td></tr>
+</c:if>
+</table>
+<hr>
+
+
+&nbsp;<a href="joDetail?joC=100+${jinfo.jno}">조 수정하기</a>&nbsp;
 &nbsp;<a href="joDelete?joC=${jinfo.jno}">조 삭제하기</a>&nbsp;
 <hr>
 &nbsp;<a href="/spring02/home">HOME</a>&nbsp;

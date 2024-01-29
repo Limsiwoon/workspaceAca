@@ -27,7 +27,7 @@
 <c:if test="${!empty requestScope.jinfo}">
 	<c:forEach var="jinfo" items="${requestScope.jinfo}">
 	<tr>
-		<td><a href="joDetail?joC=${jinfo.jno}">${jinfo.jno}</a></td>
+		<td><a href="joDetail?joC=${jinfo.jno}&">${jinfo.jno}</a></td>
 		<td>${jinfo.jname}</td>
 		<td>${jinfo.captain}</td>
 		<td>${jinfo.project}</td>

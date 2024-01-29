@@ -2,39 +2,23 @@ package com.ncs.spring02.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.ncs.spring02.domain.MemberDTO;
-import com.ncs.spring02.model.MemberDAO;
 
-//@Component
-@Service
-public class MemberService {
-	
-	@Autowired 
-	MemberDAO dao;
+public interface MemberService {
 
-	public List<MemberDTO> selectList() {
-		return dao.selectList();
-	}
+	List<MemberDTO> selectList();
 
 	// selectOne
-	public MemberDTO selectOne(String id) {
-		return dao.selectOne(id);
-	}
+	MemberDTO selectOne(String id);
+
+	List<MemberDTO> selectOne2(int jno);
 
 	// insert
-	public int insert(MemberDTO dto) {
-		return dao.insert(dto);
-	}
+	int insert(MemberDTO dto);
 
 	// update
-	public int update(MemberDTO dto) {
-		return dao.update(dto);
-	}
+	int update(MemberDTO dto);
 
-	public int delete(String id) {
-		return dao.delete(id);
-	}
+	int delete(String id);
+
 }
