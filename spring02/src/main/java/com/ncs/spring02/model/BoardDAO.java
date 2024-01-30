@@ -138,9 +138,10 @@ public class BoardDAO {
 			pst.setInt(4,dto.getRoot() );
 			pst.setInt(5, dto.getStep());
 			pst.setInt(6, dto.getIndent());
+			pst.executeUpdate();
 			
-			System.out.println("** step Update Count =>" +stepUpdate(dto));
-			return pst.executeUpdate(); // 답글 등록 성공 -> step update
+			System.out.println("** step Update Count =>" + stepUpdate(dto) );
+			return 1; // 답글 등록 성공 -> step update
 		} catch (Exception e) {
 			System.out.println(" ** BOARD Insert Exception => " + e.toString());
 			return 0;
@@ -148,10 +149,11 @@ public class BoardDAO {
 		
 	}
 	// ** stepUpdate 증가 
+	
 	// => 조건
 	// root 동일 and step 값은 >= and 새 글은 제외 
 	//step = 순위 root =원글의 번호
-	// (select* from (select ifNull(max(seq),0)+1 from board) as temp) : dto 값 내부에는 seq 값이 없기 때문에 
+	// (select* from (select ifNull(max(seq),0) from board) as temp) : dto 값 내부에는 seq 값이 없기 때문에 
 	public int stepUpdate(BoardDTO dto) {
 		sql = "update board set step=step+1 where root=? and step>=? "
                 //현재값을 찾기 위해서 서브쿼리 사용하기
@@ -160,6 +162,7 @@ public class BoardDAO {
 			pst = cn.prepareStatement(sql);
 			pst.setInt(1, dto.getRoot() );
 			pst.setInt(2, dto.getStep() );
+			System.out.println(pst);
 			return pst.executeUpdate(); //수정된 data 갯수를 리턴
 			
 		} catch (Exception e) {
