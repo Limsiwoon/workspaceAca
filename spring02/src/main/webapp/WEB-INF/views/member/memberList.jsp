@@ -47,7 +47,7 @@
 </c:if>
 </table>
 <hr>
-<a href="home">Home</a> 
+<a href="/spring02/home">Home</a> 
 <!-- 서블릿으로 가는 것이 아니기 때문에,  -->
 <a href="javascript:history.go(-1)">이전으로 돌아가기</a>&nbsp;
 </body>

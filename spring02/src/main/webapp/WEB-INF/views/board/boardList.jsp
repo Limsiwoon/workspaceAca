@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Board List</title>
+<link rel="stylesheet" type="text/css" href="/spring02/resources/myLib/writeBoard.css" >
 </head>
 <body>
 	<h2>** Spring MVC02 Board List **</h2>
@@ -13,8 +14,8 @@
 => ${requestScope.message}<br><hr>
 </c:if>
 
-<div style="width:100%; text-align:center; display:flex; justify-content:center; ">
-<table border="1" style="width:100%">
+<div style="width:100%;">
+<table>
 <tr bgcolor="lavender">
 	<th>Seq</th>
 	<th>Title</th>
@@ -27,6 +28,14 @@
 	<tr>
 		<td>${b.seq}</td>
 		<td>
+		<!-- 답글 등록 후 Title 출력 전에 들여쓰기 추가  -->
+		<c:if test="${b.indent>0}">
+			<c:forEach begin="1" end="${b.indent}">
+				<span>&nbsp;&nbsp;</span>
+			</c:forEach>
+			<span style="color:lightgrqy;">re.. </span>
+		</c:if>
+		<!--  로그인 한 경우에만, 볼 수 있도록 함.  -->
 			<c:if test="${!empty loginID}">
 				<a href="boarddetail?jCode=D&seq=${b.seq}">${b.title}</a>
 			</c:if>
@@ -45,9 +54,11 @@
 </c:if>
 </table>
 </div>
-
+<c:if test="${!empty loginID}">
+	<a href="boardInsert">등록하기</a>
+</c:if> 
 <hr>
-<a href="home">Home</a> 
+<a href="/spring02/home">Home</a> 
 
 
 </body>

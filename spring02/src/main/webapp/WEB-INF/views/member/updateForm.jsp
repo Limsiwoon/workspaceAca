@@ -17,7 +17,7 @@
 		</tr>
 		<br><tr height="40" >
 			<td bgcolor="lavender"><label for="password">Password</label></td>
-			<td><input type="text" name="password" id="password" value="${requestScope.info.password}"></td>
+			<td><input type="password" name="password" id="password" value="${requestScope.info.password}"></td>
 		</tr>
 		<br><tr height="40">
 			<td bgcolor="lavender"><label for="name">Name</label></td>
@@ -61,7 +61,7 @@
 	</table>
 	</form>
 	
-&nbsp;<a href="/web02/home.jsp">HOME</a>&nbsp;
+&nbsp;<a href="/spring02/home">HOME</a>&nbsp;
 &nbsp;<a href="javascript:history.go(-1)">이전으로 돌아가기</a>&nbsp;
 </body>
 </html>

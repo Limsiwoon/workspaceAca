@@ -10,9 +10,12 @@ public interface BoardService {
 	
 	public BoardDTO selectOne(int seq) ;
 	
-	public int insert(BoardDTO dto) ;
+	public int boardInsert(BoardDTO dto) ;
+	
+	public int rinsert(BoardDTO dto);
 	
 	public int update(BoardDTO dto) ;
 	
 	public int delete(int seq) ;
+	
 }

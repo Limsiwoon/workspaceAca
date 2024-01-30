@@ -29,7 +29,7 @@
 <c:if test="${!empty requestScope.message}">
 ${requestScope.message}
 </c:if>
-&nbsp;<a href="home">HOME</a>&nbsp;
-&nbsp;<a href="javascript:history.go(-1)">이전으로 돌아가기</a>&nbsp;
+&nbsp;<a href="/spring02/home">HOME</a>&nbsp;
+
 </body>
 </html>

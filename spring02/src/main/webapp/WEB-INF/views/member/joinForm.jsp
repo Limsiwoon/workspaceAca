@@ -16,7 +16,7 @@
 		</tr>
 		<br><tr height="40" >
 			<td bgcolor="lavender"><label for="password">Password</label></td>
-			<td><input type="text" name="password" id="password" size="20" placeholder="영문,숫자,특수문자이용"></td>
+			<td><input type="password" name="password" id="password" size="20" placeholder="영문,숫자,특수문자이용"></td>
 		</tr>
 		<br><tr height="40">
 			<td bgcolor="lavender"><label for="name">Name</label></td>
