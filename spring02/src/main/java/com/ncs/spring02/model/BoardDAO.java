@@ -126,7 +126,7 @@ public class BoardDAO {
 		// 
 	public int rinsert(BoardDTO dto) {
 		sql = "insert into board(seq,id,title,content,root,step,indent) values("
-                + " (select * from (select ifNull(max(seq),0)+1 from board) as temp), "
+                + " (select * from (select ifNull(max(seq),0)+1 from board) as temp), " //seq(최종 게시글을 기준으로)를 증가시키는 것. 
                 + " ?, ?, ?, ?, ?, ?) ";
 
 		try {
@@ -138,10 +138,11 @@ public class BoardDAO {
 			pst.setInt(4,dto.getRoot() );
 			pst.setInt(5, dto.getStep());
 			pst.setInt(6, dto.getIndent());
-			pst.executeUpdate();
 			
+			
+			pst.executeUpdate();// 답글 등록 성공 -> step update
 			System.out.println("** step Update Count =>" + stepUpdate(dto) );
-			return 1; // 답글 등록 성공 -> step update
+			return 1;
 		} catch (Exception e) {
 			System.out.println(" ** BOARD Insert Exception => " + e.toString());
 			return 0;
@@ -158,11 +159,12 @@ public class BoardDAO {
 		sql = "update board set step=step+1 where root=? and step>=? "
                 //현재값을 찾기 위해서 서브쿼리 사용하기
                 + "and seq <> (select * from (select ifNull(max(seq),0) from board) as temp) ";
-		try {
+		try {						// 내가 방금 단 답글을 제외하고, 나머지 전의 답을의 step의 순서를 1씩 올림. 
 			pst = cn.prepareStatement(sql);
 			pst.setInt(1, dto.getRoot() );
 			pst.setInt(2, dto.getStep() );
 			System.out.println(pst);
+			
 			return pst.executeUpdate(); //수정된 data 갯수를 리턴
 			
 		} catch (Exception e) {
@@ -195,12 +197,23 @@ public class BoardDAO {
 		}
 		
 	}
-	public int delete(int seq) {
-		sql = "delete from board where seq = ?" ;
-
+	
+	//** delete
+	// => seq 로 삭제
+	// => 답글 추가 후 : 원글과 답글 구분
+	// 		-> 원글 : 루트가 동일한 친구 where root=? 
+	//		-> 답글 : 답글만 삭제 where seq = ?
+//	public int delete(int seq) {
+	public int delete(BoardDTO dto) {
+		// 원글 삭제
+		if(dto.getSeq()==dto.getRoot()) {
+			sql = "delete from board where root = ? " ;
+		}else {
+			sql = "delete from board where seq = ? " ;
+		}
 		try {
 			pst= cn.prepareStatement(sql);
-			pst.setInt(1, seq);		
+			pst.setInt(1, dto.getSeq());		
 			
 			return pst.executeUpdate();
 		} catch (Exception e) {

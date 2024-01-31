@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="/spring02/resources/myLib/writeBoard.css" >
+<link rel="stylesheet" type="text/css" href="/spring02/resources/myLib/myStyle.css" >
 <title> board Detail </title>
 </head>
 <body>
@@ -40,7 +40,7 @@
 </c:if>
 <c:if test="${binfo.id==sessionScope.loginID}">
 <a href="boarddetail?jCode=U&seq=${binfo.seq}">수정하기</a>&nbsp;
-<a href="boarddetail?jCode=X&seq=${binfo.seq}">삭제하기</a>&nbsp;
+<a href="boarddetail?jCode=X&seq=${binfo.seq}&root=${binfo.root}">삭제하기</a>&nbsp;
 </c:if>
 <hr>
 <a href="/spring02/home">Home</a> 

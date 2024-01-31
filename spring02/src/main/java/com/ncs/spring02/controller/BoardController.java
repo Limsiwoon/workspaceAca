@@ -137,10 +137,10 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="boarddelete", method =RequestMethod.GET)
-	public String boarddelete(Model model, @RequestParam("seq") int seq) {
+	public String boarddelete(BoardDTO dto,Model model) {
 		String uri ="redirect:/home";
 		
-		if(boardService.delete(seq)>0) {
+		if(boardService.delete(dto)>0) {
 			model.addAttribute("message","삭제되어따 이누마");
 		}else{
 			uri="board/boardDelete";

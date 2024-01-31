@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Board List</title>
-<link rel="stylesheet" type="text/css" href="/spring02/resources/myLib/writeBoard.css" >
+<link rel="stylesheet" type="text/css" href="/spring02/resources/myLib/myStyle.css" >
 </head>
 <body>
 	<h2>** Spring MVC02 Board List **</h2>
@@ -33,7 +33,7 @@
 			<c:forEach begin="1" end="${b.indent}">
 				<span>&nbsp;&nbsp;</span>
 			</c:forEach>
-			<span style="color:lightgrqy;">re.. </span>
+			<span style="color:MediumSlateBlue;">re.. </span>
 		</c:if>
 		<!--  로그인 한 경우에만, 볼 수 있도록 함.  -->
 			<c:if test="${!empty loginID}">
