@@ -11,6 +11,37 @@
 <script src="/spring02/resources/myLib/inCheck.js"></script>
 <script>
 "use Strict"
+// ** ID 중복확인
+// => UI 개선사항
+// => 중복확인 버튼 추가
+//    처음 : 중복확인버튼_enable / submit_disable
+// => 중복확인 완료후 submit 이 가능하도록
+//    중복확인버튼_disable / submit_enable
+// => 중복확인 기능 : function idDupCheck()
+//    id입력값의 무결성점검 -> id 확인요청 -> 서버로 전송 -> id , selectOne 결과 -> response: 사용가능/불가능 
+// => 서버측 : 컨트롤러에 idDupCheck 요청을 처리하는 매핑메서드, view_Page(팝업창) 작성   
+function idDupCheck(){
+	//1 ) id 입력 후 무결성 점검
+		if(!iCheck){
+			iCheck=idCheck();
+		} else {
+			let url = "idDupCheck?id="+document.getElementById('id').value;
+			//url로 요청후, 그 결과를 3번째 인자에서 결과로 보여줌.
+			window.open(url,'_blank', 'width=400,height=300,resizable=yes,scrollbars=yes,toolbar=no,menubar=yes');
+		}
+	//2 ) 서버로 id 확인 요청 -> 결과는 view_Page(팝업창) 으로 
+}
+
+
+
+
+
+
+
+
+
+
+
 //** 입력값의 무결성 확인
 //	=> ID 중복확인, 입력값 확인
 
@@ -217,37 +248,37 @@ function inCheck(){
 </head>
 
 <body>
-	<form action="join" method="get">
+	<form action="join" method="get"width="600">
 		<table>
-			<tr height="40">
-				<td bgcolor="lavender"><label for="id">I D</label></td>
+			<tr width="450">
+				<td width="100" bgcolor="lavender"><label for="id">I D</label></td>
 				<td><input type="text" name="id" id="id" size="20"
-					placeholder="영문4글자 이상"> <span id="iMessage"
-					class="eMessage"></span></td>
+					placeholder="영문4글자 이상"><button type="button" id="idDup" onClick="idDupCheck()">ID 중복확인</button>
+					<br><span id="iMessage" class="eMessage"></span></td>
 			</tr>
-			<tr height="40">
+			<tr>
 				<td bgcolor="lavender"><label for="password">Password</label></td>
 				<td><input type="password" name="password" id="password"
-					size="20" placeholder="영문,숫자,특수문자이용"> <span id="pMessage"
+					size="20" placeholder="영문,숫자,특수문자이용"><br><span id="pMessage"
 					class="eMessage"></span></td>
 			</tr>
-			<tr height="40">
+			<tr>
 				<td bgcolor="Thistle"><label for="password">PW 확인</label></td>
 				<td><input type="password" id="password2" size="20"
-					placeholder="PW 재입력 확인"> <span id="p2Message"
+					placeholder="PW 재입력 확인"><br><span id="p2Message"
 					class="eMessage"></span></td>
 			</tr>
-			<tr height="40">
+			<tr>
 				<td bgcolor="lavender"><label for="name">Name</label></td>
 				<td><input type="text" name="name" id="name" size="20">
-					<span id="nMessage" class="eMessage"></span></td>
+					<br><span id="nMessage" class="eMessage"></span></td>
 			</tr>
-			<tr height="40">
+			<tr>
 				<td bgcolor="lavender"><label for="age">Age</label></td>
-				<td><input type="text" name="age" id="age" size="20"> <span
+				<td><input type="text" name="age" id="age" size="20"><br><span
 					id="aMessage" class="eMessage"></span></td>
 			</tr>
-			<tr height="40">
+			<tr>
 				<td bgcolor="lavender"><label for="jno">Jno</label></td>
 				<td><select name="jno" id="jno">
 						<option value="1">1조 : business</option>
@@ -257,35 +288,35 @@ function inCheck(){
 						<option value="7">7조 : 칠면조(관리팀)</option>
 				</select></td>
 			</tr>
-			<tr height="40">
+			<tr>
 				<td bgcolor="lavender"><label for="info">Info</label></td>
-				<td><input type="text" name="info" id="info"
-					placeholder="자기소개와 희망사항"> <span id="inMessage"
+				<td><textarea name="info" id="info" 
+					placeholder="자기소개와 희망사항"></textarea><br><span id="inMessage"
 					class="eMessage"></span></td>
 			</tr>
-			<tr height="40">
+			<tr>
 				<td bgcolor="lavender"><label for="point">Point</label></td>
 				<td><input type="text" name="point" id="point" size="20">
-					<span id="oMessage" class="eMessage"></td>
+					<br><span id="oMessage" class="eMessage"></td>
 			</tr>
-			<tr height="40">
+			<tr>
 				<td bgcolor="lavender"><label for="birthday">Birthday</label></td>
 				<td><input type="date" name="birthday" id="birthday"> 
-				<span id="bMessage" class="eMessage"></td>
+				<br><span id="bMessage" class="eMessage"></td>
 			</tr>
-			<tr height="40">
+			<tr>
 				<td bgcolor="lavender"><label for="rid">추천인</label></td>
-				<td><input type="text" name="rid" id="rid" size="20"></td>
+				<td><input type="text" name="rid" id="rid" size="20"><br></td>
 			</tr>
-			<tr height="40">
+			<tr>
 				<td></td>
 				<td><input type="submit" name="join" value="가입" id="submitTag"
-					onclick="return inCheck()"> <!-- => Tag 의 onclick 이벤트를 작성하고, onclick 이벤트핸들러가 가지고있던
+					onclick="return inCheck()" disabled> <!-- => Tag 의 onclick 이벤트를 작성하고, onclick 이벤트핸들러가 가지고있던
                  기본동작인 submit 을 선택적으로 진행되도록 해준다. 
                  - submit 진행 : default (또는 return true)
                  - submit 정지 : submit 이벤트를 무효화 해야함 (return false 또는 이벤트.preventDefault())  -->
 					<!-- <button type="button" onclick="inCheck()">ButtonTest</button> -->
-					<input type="reset" name="cancle" value="취소"></td>
+					<input type="reset" name="cancle" value="취소"><br></td>
 			</tr>
 		</table>
 	</form>

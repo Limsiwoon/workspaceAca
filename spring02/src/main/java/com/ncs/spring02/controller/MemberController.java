@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,7 +42,17 @@ public class MemberController {
 	@Autowired(required = false)
 	MemberService service;
 	
-	
+	//** 아이디 중복 확인 
+	@GetMapping("/idDupCheck")
+	public void idDupCheck(@RequestParam("id") String id, Model model) {
+		// 1) newID 존재 여부 확인 
+		if(service.selectOne(id)!= null) {
+			// => 사용 불가능
+			model.addAttribute("idUse", "F");
+		}else {
+			model.addAttribute("idUse", "T");
+		}
+	}
 //~~~~~~~~~~~~~~~~~~~~~~~loginForm~~~~~~~~~~~~~~~	
 	/*=> ver01 :return String
 	 * @RequestMapping(value={"/loginForm"}, method = RequestMethod.GET) // HTTP GET요청이 "/mlistsp" 경로로 들어왔을 때 특정 메서드를 실행하도록 지정하는 것 
