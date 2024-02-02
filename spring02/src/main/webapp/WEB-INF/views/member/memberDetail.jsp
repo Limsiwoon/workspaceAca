@@ -12,8 +12,9 @@
 
 <table border="1" style="width:100%">
 	<tr bgcolor="lavender">
+		<th>프로필 사진</th>
 		<th>ID</th>
-		<th>Password</th>
+		<!-- <th>Password</th> -->
 		<th>Name</th>
 		<th>Age</th>
 		<th>Jno</th>
@@ -24,8 +25,10 @@
 	</tr>
 <c:if test="${!empty requestScope.info}">
 	<tr>
+		<th><img alt="yourImg" width="150" height="250" 
+			src="/spring02/resources/uploadImages/${requestScope.info.uploadfile}"></th>
 		<th>${requestScope.info.id}</th>
-		<th>${requestScope.info.password}</th>
+		<%-- <th>${requestScope.info.password}</th> --%>
 		<th>${requestScope.info.name}</th>
 		<th>${requestScope.info.age}</th>
 		<th>${requestScope.info.jno}</th>

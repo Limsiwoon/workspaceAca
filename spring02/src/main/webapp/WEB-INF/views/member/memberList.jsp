@@ -18,7 +18,6 @@
 <table border="1" style="width:100%">
 <tr bgcolor="lavender">
 	<th>ID</th>
-	<th>Password</th>
 	<th>Name</th>
 	<th>Age</th>
 	<th>Jno</th>
@@ -26,12 +25,12 @@
 	<th>Point</th>
 	<th>Birthday</th>
 	<th>추천인</th>
+	<th>프로필 사진</th>
 </tr>
 <c:if test="${!empty requestScope.banana}">
 	<c:forEach var="banana" items="${requestScope.banana}">
 	<tr>
 		<td>${banana.id}</td>
-		<td>${banana.password}</td>
 		<td>${banana.name}</td>
 		<td>${banana.age}</td>
 		<td>${banana.jno}</td>
@@ -39,6 +38,8 @@
 		<td>${banana.point}</td>
 		<td>${banana.birthday}</td>
 		<td>${banana.rid}</td>
+		<td><img alt="yourImg" width="50" height="70" 
+			src="/spring02/resources/uploadImages/${banana.uploadfile}"></td>
 	</tr>
 	</c:forEach>
 </c:if>

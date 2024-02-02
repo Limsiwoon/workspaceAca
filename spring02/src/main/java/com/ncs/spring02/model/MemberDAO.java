@@ -10,7 +10,13 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
+import org.apache.tomcat.util.log.UserDataHelper.Mode;
 import org.springframework.stereotype.Repository;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.ncs.spring02.domain.MemberDTO;
 
@@ -57,6 +63,7 @@ public class MemberDAO {
 					dto.setPoint(rs.getDouble(7));
 					dto.setBirthday(rs.getString(8));
 					dto.setRid(rs.getString(9));
+					dto.setUploadfile(rs.getString(10));
 
 					list.add(dto); // list에 dto객체 주소를 추가함.
 				} while (rs.next());
@@ -92,6 +99,9 @@ public class MemberDAO {
 				dto.setPoint(rs.getDouble(7));
 				dto.setBirthday(rs.getString(8));
 				dto.setRid(rs.getString(9));
+				dto.setUploadfile(rs.getString(10));
+				
+				System.out.println(dto);
 				return dto;
 				
 			} else {
@@ -152,7 +162,7 @@ public class MemberDAO {
 	// 4) insert=============================================================
 	// => 모든 컬럼 입력 
 	public int insert(MemberDTO dto) {
-		sql = "insert into member values (?,?,?,?,?,?,?,?,?)";
+		sql = "insert into member values (?,?,?,?,?,?,?,?,?,?)";
 
 		try {
 			pst = cn.prepareStatement(sql); //? 를 편리하게 변환.
@@ -165,6 +175,7 @@ public class MemberDAO {
 			pst.setDouble(7, dto.getPoint());
 			pst.setString(8, dto.getBirthday());
 			pst.setString(9, dto.getRid());
+			pst.setString(10, dto.getUploadfile());
 			return pst.executeUpdate(); //처리 갯수
 		} catch (Exception e) {
 			System.out.println(" ** Insert Exception => " + e.toString());
@@ -176,21 +187,20 @@ public class MemberDAO {
 	// 5) update ===================================================================
 	// id(P.key) 제외한 모든 컬럼 수정. 
 	public int update(MemberDTO dto) {
-		sql = "update member SET password =?, name =? , age = ?, jno = ?, info = ?"
+		sql = "update member SET  name =? , age = ?, jno = ?, info = ?"
 				+ ", point =?, birthday =?, rid =? where id = ? ";
 
 		try {
 			pst = cn.prepareStatement(sql);
 			
-			pst.setString(1, dto.getPassword());
-			pst.setString(2, dto.getName());
-			pst.setInt(3, dto.getAge());
-			pst.setInt(4, dto.getJno());
-			pst.setString(5, dto.getInfo());
-			pst.setDouble(6, dto.getPoint());
-			pst.setString(7, dto.getBirthday());
-			pst.setString(8, dto.getRid());
-			pst.setString(9, dto.getId());
+			pst.setString(1, dto.getName());
+			pst.setInt(2, dto.getAge());
+			pst.setInt(3, dto.getJno());
+			pst.setString(4, dto.getInfo());
+			pst.setDouble(5, dto.getPoint());
+			pst.setString(6, dto.getBirthday());
+			pst.setString(7, dto.getRid());
+			pst.setString(8, dto.getId());
 			
 			return pst.executeUpdate();
 		} catch (Exception e) {
@@ -198,6 +208,23 @@ public class MemberDAO {
 			return 0;
 		}
 
+	}
+	
+
+	// passwordUpdate
+	public int pwUpdate(MemberDTO dto) {
+		sql="update member set password =? where id= ?";
+		try {
+			pst = cn.prepareStatement(sql);
+			pst.setString(1, dto.getPassword());
+			pst.setString(2, dto.getId());
+			
+			return pst.executeUpdate();
+			
+		} catch (Exception e) {
+			System.out.println(" ** password update Exception => " + e.toString());
+			return 0;
+		}
 	}
 
 	// 6) delete

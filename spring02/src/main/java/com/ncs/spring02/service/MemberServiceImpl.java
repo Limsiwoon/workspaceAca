@@ -12,6 +12,13 @@ import com.ncs.spring02.model.MemberDAO;
 @Service
 public class MemberServiceImpl implements MemberService {
 	
+	
+	 @Override 
+	 public int pwUpdate(MemberDTO dto) { 
+		 return dao.pwUpdate(dto); 
+	}
+	 
+
 	@Autowired 
 	MemberDAO dao;
 

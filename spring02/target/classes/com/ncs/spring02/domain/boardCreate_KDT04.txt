@@ -86,7 +86,28 @@
 		
 		
 		
-		
+=================================================================	
+=================================================================	
+** Upload File
+1) Table
+=> file 정보(경로와 파일명) 보관 컬럼 추가 :uploadfile varchar(100) default 'siba.png';
+	sql = 
+	alter table member ADD uploadfile varchar(100) default 'siba.png';
+
+=> 기본값 넣어놓기
+	sql = 
+	update member set uploadfile='lll.jpg' where jno=1;
+	update member set uploadfile='adv.gif' where jno=2;
+	update member set uploadfile='banana2.gif' where jno=3;
+	update member set uploadfile='phello.gif' where jno=4;
+	update member set uploadfile='pica01.gif' where jno=7;
+	
+	select id,name,jno,uploadfile from member;
+
+=> IDE(이클립스)에 준비 
+	webapp/resources/uploadImages/ 에 위의 파일들을 복사해 두기.
+
+2) Java Code	
 		
 		
 		

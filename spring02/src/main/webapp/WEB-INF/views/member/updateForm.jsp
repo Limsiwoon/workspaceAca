@@ -17,7 +17,7 @@
 		</tr>
 		<br><tr height="40" >
 			<td bgcolor="lavender"><label for="password">Password</label></td>
-			<td><input type="password" name="password" id="password" value="${requestScope.info.password}"></td>
+			<td><input type="password" name="password" id="password" value="${requestScope.info.password}" readonly></td>
 		</tr>
 		<br><tr height="40">
 			<td bgcolor="lavender"><label for="name">Name</label></td>
@@ -60,7 +60,8 @@
 		</tr>
 	</table>
 	</form>
-	
+<hr>	
+&nbsp;<a href="pwUpdate">비밀번호 변경</a>&nbsp;
 &nbsp;<a href="/spring02/home">HOME</a>&nbsp;
 &nbsp;<a href="javascript:history.go(-1)">이전으로 돌아가기</a>&nbsp;
 </body>

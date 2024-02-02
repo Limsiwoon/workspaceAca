@@ -35,8 +35,8 @@ onload=function(){
 	  document.getElementById('password').addEventListener('keydown',
 	       (e)=>{
 	          if (e.which==13) {
-	             /* e.preventDefault();
-	             document.getElementById('subTag').focus(); */
+	             e.preventDefault();
+	             document.getElementById('subTag').focus(); 
 	             
 	               // => password 에서 입력후 Enter_Key 누르면 바로 submit 진행 되도록~~
 	               //     type="submit" 을 사용하는경우 정확하게 적용하기 어려워 적용하지 않음    
