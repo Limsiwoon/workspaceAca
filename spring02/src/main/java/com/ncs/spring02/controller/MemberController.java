@@ -217,7 +217,7 @@ public class MemberController {
 	      if ( realPath.contains(".eclipse.") ) // 개발중
 	          realPath ="E:\\MTest\\workspaceAca\\workspaceAca\\spring02\\src\\main\\webapp\\resources\\uploadImages\\";
 	      		//(배포전) 나 혼자 개발 할 떄 저장하는 경로
-	      else realPath ="resources\\uploadImages\\";
+	      else realPath ="E:\\MTest\\IDESet\\apache-tomcat-9.0.85\\webapps\\spring02\\resources\\uploadImages\\";
 	      		//(배포후)서버 관점의 경로 : (모두가 접근 할 수있도록 만든 경로)
 	      
 	      // 1.3) 폴더 만들기 (없을수도 있음을 가정, File 실습)
@@ -231,17 +231,18 @@ public class MemberController {
 	      // => file.isFile()
 	      //   -> 파일이 존재하는 경우 true 리턴,
 	      //   -> file의 Path 가 폴더인 경우는 false 리턴
-	      File file = new File(realPath); // 이전까지는 그저 string에 불과함. 
+	      File file = new File(realPath); // 이전까지는 그저 string에 불과함.  => 경로 인식. 
 	      if ( !file.exists() ) {
 	         // => 저장폴더가 존재하지 않는경우 만들어줌
-	         file.mkdir();
-	      }
+	         file.mkdir(); // 디렉토리를 만들기 
+	      } // 참고 ** file인지 폴더 인지 구분 하지 않고, 존재 여부만판단. 구분이 명확해야 하는 경우, isDirectory에서 true인 경우 폴더임. 
 	      
 	      // --------------------이미지를 업로드------------------------
 	      // ** File Copy 하기 (IO Stream 실습)
 	      // => 기본이미지(siba.png) 가 uploadImages 폴더에 없는경우 기본폴더(images) 에서 가져오기
 	      // => IO 발생: Checked Exception 처리
-	      file = new File(realPath+"siba.png"); // 경로에 이미지를 저장함. uploadImages 폴더에 화일존재 확인을 위함
+	      file = new File(realPath+"siba.png");
+	      //file = new File(realPath+"siba.png"); // 경로에 이미지를 저장함. uploadImages 폴더에 화일존재 확인을 위함
 	      if ( !file.isFile() ) { // 존재하지않는 경우
 	         String basicImagePath 
 	               = "E:\\MTest\\workspaceAca\\workspaceAca\\spring02\\src\\main\\webapp\\resources\\images\\siba.png";
@@ -292,14 +293,48 @@ public class MemberController {
 	} //join
 	
 //~~~~~~~~~~~~~~~~~update~~~~~~~~~~~~~~~~~~~~~~~~~~
-	@RequestMapping(value="/update", method = RequestMethod.GET)
-	public String update(HttpSession session, Model model,MemberDTO dto) { 
+	@RequestMapping(value="/update", method = RequestMethod.POST)
+	public String update(HttpServletRequest request, HttpSession session, Model model,MemberDTO dto) throws Exception { 
 		//1. 요청분석
 		// => 성공시 memberDetail, 실패 : updateForm
 		// => 두 경우 모두 출력하려면, dto 객체의 값("info") 가 필요하므로 보관
 		
 		String uri = "member/memberDetail"; // 성공시 
 		model.addAttribute("info", dto);
+		
+		//**uploadFile처리 
+		//	=> newImage 선택 여부 
+		//	=> 선택 -> oldImage 삭제, newImage 저장 : uploadFilef 사용
+		//	=> 선택하지 않음 -> oldImage가 uploadFile로 전달되었음으로 그냥 사용. 
+		
+		MultipartFile uploadfilef = dto.getUploadfilef();
+		
+	    if ( uploadfilef!=null && !uploadfilef.isEmpty() ) {
+	    	// => newImage 선택
+	        // 1) 물리적 위치 저장 ( file1 )
+	    	String realPath = request.getRealPath("/");
+	    	String file1=dto.getUploadfile(); //받아온 파일을 oldImage 기본값을 넣기
+	    	
+	    	// 2) realPath를 이용해서 물리적 저장위치 file1 확인
+	    	if ( realPath.contains(".eclipse.") ) // 개발중
+	    		realPath ="E:\\MTest\\workspaceAca\\workspaceAca\\spring02\\src\\main\\webapp\\resources\\uploadImages\\";
+	    	else realPath ="E:\\MTest\\IDESet\\apache-tomcat-9.0.85\\webapps\\spring02\\resources\\uploadImages\\";
+	    	
+	    	// 3) oldFile 삭제
+	    	// 	=> oldFile Name : dto.getUploadfile()
+	    	//	=> 삭제 경로 : realPath+dto.getUploadfile()
+	    	File delFile= new File(realPath+dto.getUploadfile() ); // 지울 파일 경로를 delFile에 담기 . 
+	    	if(delFile.isFile()) delFile.delete();// 존재한다면 삭제
+	    	
+	    	// 4) newFile 저장
+	        file1=realPath+uploadfilef.getOriginalFilename(); //저장경로(relaPath+화일명) 완성
+	        uploadfilef.transferTo(new File(file1)); //try catch를 해주지 않으면 이용 X => Throws 사용
+	         
+	        // 5) Table 저장경로 완성 (uploadfilef.getOriginalFilename())
+	        dto.setUploadfile(uploadfilef.getOriginalFilename());
+	      }
+	      // --------------------------------------------
+		
 		
 		// 2. Service & 결과 
 		if( service.update(dto) > 0 ) {

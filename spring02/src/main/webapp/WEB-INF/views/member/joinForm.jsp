@@ -317,7 +317,24 @@ function inCheck(){
 			</tr>
 			<tr>
 				<td bgcolor="lavender"><label for="uploadfilef">프로필사진</label></td>
-				<td><input type="file" name="uploadfilef" id="uploadfilef" size="20"><br></td>
+				<td><img alt="MyImage" src="" class="select_img"><br>
+
+					<input type="file" name="uploadfilef" id="uploadfilef" size="20"><br></td>
+				<script>
+					/* 멀티 이미지 파일 => 실제로 배열 형태로 저장 되어 있으나,
+					이 경우, 하나의 이미지만 사용하기 때문에 인덱스 [0]을 사용함.
+					또한 클래스의 이름이 동일 할 수 있기때문에 인덱스 사용함. */
+					document.getElementById('uploadfilef').onchange = function(e) {
+						if (this.files && this.files[0]) {
+							let reader = new FileReader;
+							reader.readAsDataURL(this.files[0]);
+							reader.onload = function(e) {
+								// => jQuery를 사용하지 않는경우 
+								document.getElementsByClassName('select_img')[0].src = e.target.result;
+							} // onload_function
+						} // if   
+					}; //change
+				</script>
 				
 				<!--  ** FileUpLoad Form **
 => form 과 table Tag 사용시 주의사항 : form 내부에 table 사용해야함

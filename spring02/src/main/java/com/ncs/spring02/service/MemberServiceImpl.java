@@ -6,52 +6,71 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ncs.spring02.domain.MemberDTO;
-import com.ncs.spring02.model.MemberDAO;
+//import com.ncs.spring02.model.MemberDAO;
+
+import mapperInterface.MemberMapper;
 
 //@Component
 @Service
 public class MemberServiceImpl implements MemberService {
+	//@Autowired 
+	//MemberDAO	dao;
 	
+	//** Mybatis 적용
+	//=> CRUD 처리를 Mapper 를 이용
+	//=> DAO 대신 Mapper interface ->  ~Mapper.xml
+
+	//** Mybatis interface 방식으로 적용
+	//=> MemberDAO 대신 MemberMapper 사용
+	//=> MemberMapper 의 인스턴스를 스프링이 생성해주고 이를 주입받아 실행함
+	// (스프링이 생성해주는 동일한 타입의 클래스는 JUnit Test 로 확인가능, 추후 실습) 
+	//=> 단, 설정화일에 <mybatis-spring:scan base-package="mapperInterface"/> 반드시 추가해야함
+//	    MemberDAO의 Sql구문 처리를 mapperInterface 사용으로 MemberMapper 가 역할을 대신함
+
+	//=> SQL 구문 : xml 로작성 -> 이 화일을 Mapper 라 함 
+	//=> Mapper 작성규칙
+	//   -> mapperInterface 와 패키지명, 화일명이 동일해야함
+	//	 -> 즉, Java interface, Mapper, Mapper 와 namespace 값(패키지의파일명)이 모두 동일해야함. 
+	//	 -> 그리고 해당메서드는 Mapper 의 xml 구문의 id 속성값으로 찾음. 
+	@Autowired 
+	MemberMapper mapper;
 	
 	 @Override 
 	 public int pwUpdate(MemberDTO dto) { 
-		 return dao.pwUpdate(dto); 
+		 return mapper.pwUpdate(dto); 
 	}
 	 
 
-	@Autowired 
-	MemberDAO dao;
-
 	@Override
 	public List<MemberDTO> selectList() {
-		return dao.selectList();
+		return mapper.selectList();
 	}
 
 	// selectOne
 	@Override
 	public MemberDTO selectOne(String id) {
-		return dao.selectOne(id);
+		return mapper.selectOne(id);
 	}
 	@Override
 	public List<MemberDTO> selectOne2(int jno) {
-		return dao.selectOne2(jno);
+		return mapper.selectOne2(jno);
 	}
 	
 
 	// insert
 	@Override
 	public int insert(MemberDTO dto) {
-		return dao.insert(dto);
+		return mapper.insert(dto);
 	}
 
 	// update
 	@Override
 	public int update(MemberDTO dto) {
-		return dao.update(dto);
+		return mapper.update(dto);
 	}
 
 	@Override
 	public int delete(String id) {
-		return dao.delete(id);
+		return mapper.delete(id);
 	}
 }

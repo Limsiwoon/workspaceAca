@@ -45,5 +45,6 @@ public class MemberDTO {
    // MultipartFile(i) -> commonsMultipartFile
    // pom.xml dependency 추가
    // 구현체 commonsMultipartFile를 생성(servlet--.xml)
+   
    private MultipartFile uploadfilef;
 }
