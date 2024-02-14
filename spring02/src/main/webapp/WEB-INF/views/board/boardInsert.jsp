@@ -35,7 +35,7 @@
 <table>
 </table>
 <br>
-&nbsp;<a href="/web02/home.jsp">HOME</a>&nbsp;
+&nbsp;<a href="/spring02/home">HOME</a>&nbsp;
 &nbsp;<a href="javascript:history.go(-1)">이전으로 돌아가기</a>&nbsp;
 </body>
 </html>

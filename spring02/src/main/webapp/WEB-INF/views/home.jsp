@@ -44,6 +44,7 @@
 	&nbsp;<a href="jo/joList">JoList</a>
 	&nbsp;<a href="board/boardList">Board List</a>
 	&nbsp;<a href="bcrypt">BCrypt</a>
+	&nbsp;<a href="board/bPageList">Bpage</a>
 </body>
 
 

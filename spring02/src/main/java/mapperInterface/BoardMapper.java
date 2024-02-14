@@ -1,4 +1,4 @@
-package com.ncs.spring02.service;
+package mapperInterface;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import com.ncs.spring02.domain.BoardDTO;
 
 import pageTest.Criteria;
 
-public interface BoardService {
+public interface BoardMapper {
 	
 	public List<BoardDTO> bPageList(Criteria cri);
 	
@@ -19,6 +19,8 @@ public interface BoardService {
 	public int boardInsert(BoardDTO dto) ;
 	
 	public int rinsert(BoardDTO dto);
+	
+	public int stepUpdate(BoardDTO dto) ;
 	
 	public int update(BoardDTO dto) ;
 	

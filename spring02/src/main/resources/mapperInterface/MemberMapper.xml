@@ -13,6 +13,11 @@
 		<!-- #{} : 쿼리문에 들어올 값, 인자로 전달되어 들어갈 값 -->
 	</select>
 	
+<!-- selectOne2 -->	
+	<select id="selectOne2" resultType="com.ncs.spring02.domain.MemberDTO">
+		select * from member where jno =#{jno}
+	</select>
+	
 <!-- insert -->
 	<insert id="insert">
 		insert into member values (#{id},#{password},

@@ -1,6 +1,5 @@
 package com.ncs.spring02.controller;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -12,12 +11,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.mysql.cj.Session;
 import com.ncs.spring02.domain.BoardDTO;
 import com.ncs.spring02.service.BoardService;
 import com.ncs.spring02.service.MemberService;
 
 import lombok.AllArgsConstructor;
+import pageTest.Criteria;
+import pageTest.PageMaker;
 
 @Controller
 @AllArgsConstructor
@@ -27,7 +27,24 @@ public class BoardController {
 	
 	BoardService boardService;
 	MemberService memberService;
+
 	
+	//** Board_Paging
+	@GetMapping("/bPageList")
+	public void bPageList(Model model, Criteria	cri, PageMaker pageMaker) {
+		// 1) Criteria 처리 
+		cri.setSnoEno();
+		// 2) Service 
+		// => 출력 대상인 rows를 select
+		model.addAttribute("banana", boardService.bPageList(cri));
+		
+		// 3) View처리 : PageMaker 이용
+		// => cri, totalRowsCount (Read from DB) 
+		pageMaker.setCri(cri);
+		pageMaker.setTotalRowsCount(boardService.totalRowsCount(cri) );
+		model.addAttribute("pageMaker", pageMaker);
+	
+	}
 	
 	//**reply Insert
 	@GetMapping("replyInsert")

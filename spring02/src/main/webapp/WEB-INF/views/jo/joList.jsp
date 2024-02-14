@@ -21,6 +21,7 @@
 	<th>Jno</th>
 	<th>Jname</th>
 	<th>Captain</th>
+	<th>Name</th>
 	<th>Project</th>
 	<th>Slogan</th>
 </tr>
@@ -30,6 +31,7 @@
 		<td><a href="joDetail?joC=${jinfo.jno}&">${jinfo.jno}</a></td>
 		<td>${jinfo.jname}</td>
 		<td>${jinfo.captain}</td>
+		<td>${jinfo.name}</td>
 		<td>${jinfo.project}</td>
 		<td>${jinfo.slogan}</td>
 	</tr>

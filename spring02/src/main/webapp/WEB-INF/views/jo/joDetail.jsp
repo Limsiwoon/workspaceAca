@@ -15,6 +15,7 @@
 		<th>Jno</th>
 		<th>Jname</th>
 		<th>Captain</th>
+		<th>Name</th>
 		<th>Project</th>
 		<th>Slogan</th>
 
@@ -24,6 +25,7 @@
 		<th>${requestScope.jinfo.jno}</th>
 		<th>${requestScope.jinfo.jname}</th>
 		<th>${requestScope.jinfo.captain}</th>
+		<td>${requestScope.jinfo.name}</td>
 		<th>${requestScope.jinfo.project}</th>
 		<th>${requestScope.jinfo.slogan}</th>
 	</tr>
@@ -37,7 +39,7 @@
 <table border="1" style="width:100%">
 <tr bgcolor="NavajoWhite">
 	<th>ID</th>
-	<th>Password</th>
+	<!-- <th>Password</th> -->
 	<th>Name</th>
 	<th>Age</th>
 	<th>Jno</th>
@@ -50,7 +52,7 @@
 <c:forEach var="banana2" items="${requestScope.banana2}">
 	<tr>
 		<td>${banana2.id}</td>
-		<td>${banana2.password}</td>
+		<%-- <td>${banana2.password}</td> --%>
 		<td>${banana2.name}</td>
 		<td>${banana2.age}</td>
 		<td>${banana2.jno}</td>
