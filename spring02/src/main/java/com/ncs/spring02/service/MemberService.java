@@ -4,8 +4,15 @@ import java.util.List;
 
 import com.ncs.spring02.domain.MemberDTO;
 
+import pageTest.SearchCriteria;
+
 public interface MemberService {
 
+	//pageMaker 함수 필요 
+	public List<MemberDTO> mPageList(SearchCriteria cri);
+	public int totalRowsCount(SearchCriteria cri);
+
+	
 	List<MemberDTO> selectList();
 
 	// selectOne

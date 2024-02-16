@@ -1,5 +1,6 @@
 package com.ncs.spring02.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -16,8 +17,8 @@ import com.ncs.spring02.service.BoardService;
 import com.ncs.spring02.service.MemberService;
 
 import lombok.AllArgsConstructor;
-import pageTest.Criteria;
 import pageTest.PageMaker;
+import pageTest.SearchCriteria;
 
 @Controller
 @AllArgsConstructor
@@ -28,14 +29,54 @@ public class BoardController {
 	BoardService boardService;
 	MemberService memberService;
 
+	//board Check List
+	@GetMapping("/bCheckList")
+	public String bCheckList(HttpServletRequest request, Model model, SearchCriteria cri, PageMaker pageMaker) {		
+		String uri="board/bPageList";
+		// 1) Criteria 처리 
+
+		cri.setSnoEno();
+		
+		String mappingName = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/")+1);
+		// 첫 / 를 지나친 그 이후부터 찾아야 하기 때문에 +1을 해야함. 
+		// 즉, /spring02/board/bPageList 에서 bPageList을 찾기 위해 +1을 하는 것임 
+		System.out.println("=>RequestURI : " +request.getRequestURI() );
+		// => RequestURI :/spring02/board.bPageList
+		System.out.println("=> mappingName : "+mappingName);
+		
+		// 2) Service 
+		// 	=> check 의 값을 선택하지 않은경우 check 값을 null 로 확실하게 해줘야함.
+		//	=> mapper 에서 명확하게 구분할수 있도록해야 정확한 저리가능
+		if(cri.getCheck() !=null && cri.getCheck().length<1 ) cri.setCheck(null);
+		
+		model.addAttribute("banana", boardService.bCheckList(cri));
+		
+		// 3) View처리 : PageMaker 이용
+		// => cri, totalRowsCount (Read from DB) 
+		pageMaker.setCri(cri);
+		pageMaker.setMappingName(mappingName);
+		pageMaker.setTotalRowsCount(boardService.bCheckRowsCount(cri) );
+		model.addAttribute("pageMaker", pageMaker);
+		return uri;
+	}
 	
 	//** Board_Paging
+	// 버전 1 : Criteria 사용
+	// 버전 2 : SearchCriteria 사용 (검색기능 추가 )
 	@GetMapping("/bPageList")
-	public void bPageList(Model model, Criteria	cri, PageMaker pageMaker) {
+	public void bPageList(HttpServletRequest request, Model model, SearchCriteria cri, PageMaker pageMaker) {		
+
+		String mappingName = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/")+1);
 		// 1) Criteria 처리 
+		// 버전 1 : currPage, rowsPerPage 값들은 패러미터 값으로 전달되어 자동으로 cri 에 set해줌
+		// 버전 2 : 버전1 + searchType, keyword 도 동일하게 cri 에 set해줌 
 		cri.setSnoEno();
+		
+		pageMaker.setMappingName(mappingName);
 		// 2) Service 
-		// => 출력 대상인 rows를 select
+		// 버전 1 : => 출력 대상인 rows를 select
+		// 버전 2 : => 모두 같은 service 메서드 사용함 , mapper interface에서 사용하는 Sql 구문만 교체
+		//		   => 즉, BoardMapper.xml 에 새로운 sql 구문 추가, BoardMapper.java interface 수정
 		model.addAttribute("banana", boardService.bPageList(cri));
 		
 		// 3) View처리 : PageMaker 이용
@@ -43,7 +84,7 @@ public class BoardController {
 		pageMaker.setCri(cri);
 		pageMaker.setTotalRowsCount(boardService.totalRowsCount(cri) );
 		model.addAttribute("pageMaker", pageMaker);
-	
+		
 	}
 	
 	//**reply Insert

@@ -20,6 +20,7 @@ a:active { color:Blue; }
 	font-size: x-small; 
 	font-style: italic;
 }
+
  /* Span MenuLink */
 .textlink { color:Blue; font-weight:bold; }
 .textlink:hover { 
@@ -49,4 +50,21 @@ a:active { color:Blue; }
 	float: left;
 }
 
+#write_botton{
+	position : absolute;
+	right : 15%;
+    border: 1px solid #d6d6d6;
+    height: 30px;
+    width: 70px;
+    text-align: center;
+}
 
+body{
+	margin : 0 auto;
+	width: 85%;
+	text-align: center;
+}
+
+table{
+	margin : 0 auto;
+}

@@ -5,10 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ncs.spring02.domain.BoardDTO;
 import com.ncs.spring02.domain.MemberDTO;
 //import com.ncs.spring02.model.MemberDAO;
 
 import mapperInterface.MemberMapper;
+import pageTest.SearchCriteria;
 
 //@Component
 @Service
@@ -34,6 +36,16 @@ public class MemberServiceImpl implements MemberService {
 	//	 -> 그리고 해당메서드는 Mapper 의 xml 구문의 id 속성값으로 찾음. 
 	@Autowired 
 	MemberMapper mapper;
+	
+	//pageMaker함수 오버라이딩
+	@Override
+	public List<MemberDTO> mPageList(SearchCriteria cri) {
+		return mapper.mSearchList(cri);
+	}
+	
+	public int totalRowsCount(SearchCriteria cri) {
+		return mapper.mSearchRowsCount(cri);
+	}
 	
 	 @Override 
 	 public int pwUpdate(MemberDTO dto) { 

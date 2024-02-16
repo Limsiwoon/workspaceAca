@@ -25,6 +25,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.ncs.spring02.domain.MemberDTO;
 import com.ncs.spring02.service.MemberService;
 
+import pageTest.PageMaker;
+import pageTest.SearchCriteria;
+
 
 //** IOC/DI 적용 ( @Component 의 세분화 ) 
 //=> 스프링 프레임워크에서는 클래스들을 기능별로 분류하기위해 @ 을 추가함.
@@ -50,11 +53,31 @@ public class MemberController {
 	@Autowired(required = false)
 	MemberService service;
 	
+	//mPageList paing
+	@GetMapping("/mPageList")
+	public void mPageList(HttpServletRequest request, Model model, SearchCriteria cri, PageMaker pageMaker) {
+		
+		String mappingName = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/")+1);
+		
+		cri.setSnoEno();
+		
+		//mPageList 는 search할 것을 명해주고 
+		model.addAttribute("banana", service.mPageList(cri));
+		pageMaker.setCri(cri);
+		//totalRowsCount에서는 페이지가 몇장이 나와야 하는지 계산해줌 
+		pageMaker.setTotalRowsCount(service.totalRowsCount(cri) );
+		model.addAttribute("pageMaker", pageMaker);
+		
+		//확인용
+		System.out.println("  **  M Controller 내부 mPageList 진입.  **  ");
+		
+	}
+	
 	// ** passwordencoding 
 	//   -> new활용 하지 않고 @Autowired를 활용 & bean을 만들어줘야 함( 라이브러리 사용할 때 -> xml에서 작성함. ). 
 	@Autowired
-	PasswordEncoder passwordEncoder;
-	
+	PasswordEncoder passwordEncoder;	
+
 	//** 아이디 중복 확인 
 	@GetMapping("/idDupCheck")
 	public void idDupCheck(@RequestParam("id") String id, Model model) {

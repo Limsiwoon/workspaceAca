@@ -2,6 +2,50 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapperInterface.MemberMapper">
+
+<!-- mPageList Paging 하기 
+sno : start Row 순서번호
+rowsPerPage : 페이지 당 맴버 명수 =  -->
+	<select id="mPageList" resultType="com.ncs.spring02.domain.MemberDTO">
+		select * from member 
+		limit #{sno},#{rowsPerPage}
+	</select>
+	<select id="totalRowsCount" resultType="int">
+		select count(*) from member
+	</select>
+	
+	<!-- msearchList 작성 -->
+<sql id="msearch">	
+	<if test="keyword != null">
+         <bind name="keyval" value="'%'+keyword+'%'"/>
+    </if>
+    <choose>
+         <!-- id, title, content 에서 keyword가 포함된 글 목록 -->
+         <when test="searchType=='all' and keyword!=null">
+            ( id Like #{keyval}
+            or name Like #{keyval}
+            or info Like #{keyval} 
+            or rid Like #{keyval} ))
+         </when>
+         <!-- searchType이 컬럼명인 경우 -->
+         <when test="searchType!=null and keyword!=null">
+            (${searchType} Like #{keyval}))
+         </when>
+         <otherwise>)</otherwise>
+      </choose>
+</sql>
+	<select id="mSearchList" resultType="com.ncs.spring02.domain.MemberDTO">
+		select * from member 
+		where (id is Not NULL <include refid="msearch"></include>
+		limit #{sno}, #{rowsPerPage}
+	</select>
+	<select id="mSearchRowsCount" resultType="int">
+		select count(*) from member 
+		where (id is Not NULL <include refid="msearch"></include>
+	</select>
+	
+	
+	
 <!-- selectList -->
 	<select id="selectList" resultType="com.ncs.spring02.domain.MemberDTO">
 		select * from member
