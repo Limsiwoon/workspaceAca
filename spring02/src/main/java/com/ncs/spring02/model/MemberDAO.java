@@ -24,7 +24,7 @@ import com.ncs.spring02.domain.MemberDTO;
 
 
 //@Component
-@Repository
+//@Repository
 public class MemberDAO {
 
 	// 1) 전역변수 정의
@@ -78,6 +78,36 @@ public class MemberDAO {
 			return null;
 		}
 	}
+	
+	// ** JUnit Test ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// => Mybatis 와 참조형 매개변수 사용 비교  
+	   public MemberDTO selectDTO(MemberDTO dto) {
+	        sql = "SELECT * FROM member WHERE id=?";  
+	        try {
+	           pst = cn.prepareStatement(sql);
+	           pst.setString(1, dto.getId());
+	           rs = pst.executeQuery();
+	           if (rs.next()) {
+	              dto.setId(rs.getString(1));
+	            dto.setPassword(rs.getString(2));
+	            dto.setName(rs.getString(3));
+	            dto.setAge(rs.getInt(4));
+	            dto.setJno(rs.getInt(5));
+	            dto.setInfo(rs.getString(6));
+	            dto.setPoint(rs.getDouble(7));
+	            dto.setBirthday(rs.getString(8));
+	            dto.setRid(rs.getString(9));
+	            dto.setUploadfile(rs.getString(10));
+	              return dto;
+	           } else {
+	            return null;
+	           }
+	        }catch (Exception e) {
+	           System.out.println("** selectOne Exception => " + e.toString());
+	           return null;
+	        }
+	   } //selectDTO
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	// 3) selectOne===================================================================
 

@@ -30,4 +30,16 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	<mybatis-spring:scan base-package="mapperInterface"/>
+	
+	<!-- **************************************************** -->
+	
+	<!-- JUnit Test
+		=> SpringDAO Test Bean 설정 : MemberDTO, MemberDAO -->
+	<bean class="com.ncs.spring02.model.MemberDAO" lazy-init="true"/>
+	<bean class="com.ncs.spring02.domain.MemberDTO" lazy-init="true"/>
+
+	
+	
+	
+	
 </beans>

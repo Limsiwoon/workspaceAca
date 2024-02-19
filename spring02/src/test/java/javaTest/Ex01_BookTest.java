@@ -107,7 +107,7 @@ public class Ex01_BookTest {
 	
 	
 	//5) assertArrayEquals(a,b) : 배열 a와b가 일치함을 확인
-	@Test
+	//@Test
 	public void arrEqualsTest() {
 		String[] ar1={"임","시","운"};
 		String[] ar2={"임","시","운"};

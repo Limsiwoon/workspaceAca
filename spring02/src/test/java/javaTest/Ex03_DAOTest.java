@@ -23,7 +23,7 @@ public class Ex03_DAOTest {
 	MemberDTO dto = new MemberDTO();
 
 	// 1) Detail  정확성
-	@Test
+	//@Test
 	public void detailTest() {
 		
 		String id="banana"; 
@@ -33,7 +33,7 @@ public class Ex03_DAOTest {
 	}
 
 	// 2) Insert 정확성
-	@Test
+	//@Test
 	public void insertTest() {
 		dto.setId("junit");
 		dto.setPassword("12345!");
