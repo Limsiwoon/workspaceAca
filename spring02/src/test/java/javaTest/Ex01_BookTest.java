@@ -6,7 +6,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+
 
 //**Book Class
 //	=> 맴버필드 3개(author,title,price) 정의, 이들을 모두 초기화 하는 생성자를 만듦.
@@ -94,7 +95,7 @@ public class Ex01_BookTest {
 	
 	
 	//4) assertNotNull(a) : a객체가 Null 이 아님을 확인
-	//@Test
+	@Test
 	public void nullTest() {
 		Book b1;
 		// => 인스턴스를 정의만 하고 생성은 하지않음

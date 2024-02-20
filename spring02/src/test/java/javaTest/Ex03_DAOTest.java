@@ -1,10 +1,10 @@
 package javaTest;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.apache.ibatis.annotations.Select;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import com.ncs.spring02.domain.MemberDTO;
 import com.ncs.spring02.model.MemberDAO;

@@ -47,6 +47,15 @@
 	&nbsp;<a href="board/boardList">Board List</a>
 	&nbsp;<a href="bcrypt">BCrypt</a>
 	&nbsp;<a href="board/bPageList">Bpage</a>
+	<br>
+	&nbsp;<a href="etest">Exception</a>
+	&nbsp;<a href="member/log4jTest">@log4jTest</a>
+	<br>
+	<hr>
+	&nbsp;<a href="greensn">GreenSN</a>&nbsp;
+	&nbsp;<a href="greenall">GreenALL</a>&nbsp;
+	&nbsp;<a href="jeju">JeJu</a>&nbsp;
+	&nbsp;<a href="gps">GPS</a>&nbsp;
 </body>
 
 
