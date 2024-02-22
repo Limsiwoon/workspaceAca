@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapperInterface.JoMapper">
+
+
+<!--  selectJoList -->
+    <select id="joSelectList" resultType="com.example.demo.domain.JoDTO" >
+        select A.jno, A.jname, A.captain, B.name, A.project, A.slogan
+        from jo A LEFT JOIN member B on A.captain = B.id
+    </select>
+
+    <!--  selectJoOne -->
+    <select id="joSelectOne" resultType="com.example.demo.domain.JoDTO" >
+        select A.jno, A.jname, A.captain, B.name, A.project, A.slogan
+        from jo A LEFT JOIN member B on A.captain = B.id
+        WHERE A.jno=#{jno}
+    </select>
+
+
+<!-- joSelectList -->
+	<!-- <select id="joSelectList" resultType="com.ncs.spring02.domain.JoDTO">
+		select * from jo
+	</select> -->
+
+<!-- joSelectOne -->
+	<!-- <select id="joSelectOne" resultType="com.ncs.spring02.domain.JoDTO">
+		select * from jo where jno = #{jno}
+	</select> -->
+
+<!-- joupdate -->
+	<update id="joupdate">
+		update jo set jname = #{jname} , captain = #{captain}, project = #{project}, slogan = #{slogan} 
+		where jno = #{jno} 
+	</update>
+
+<!-- joinsert -->
+	<insert id="joinsert">
+		insert into jo values (#{jno} ,#{jname} ,#{captain},#{project},#{slogan})
+	</insert>
+
+<!-- joDelete -->
+	<delete id="joDelete">
+		delete from jo where jno = #{jno}
+	</delete>
+
+
+</mapper>

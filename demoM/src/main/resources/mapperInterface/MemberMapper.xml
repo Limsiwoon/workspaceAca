@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapperInterface.MemberMapper">
+
+
+<!-- 체크리스트 검색 -->
+<select id="mCheckList" resultType="com.example.demo.domain.MemberDTO">
+	select * from member
+	<if test="check!=null">
+		where jno in
+		<foreach collection="check" item="it" open="(" close=")" separator=",">
+				<!-- collection이라는 속성의 값이 list 배열 타입의 매개변수 -->
+			#{it}
+		</foreach>
+	</if>
+	limit #{sno}, #{rowsPerPage}
+</select>
+	
+<select id="mCheckRowsCount" resultType="int">
+	select count(*) from member
+       <if test="check!=null">
+       where jno in
+          <!-- ('','','') -->
+           <foreach collection="check" item="it" open="(" close=")" separator=",">
+               #{it}
+           </foreach>
+       </if>	
+</select> 
+
+
+
+<!-- mPageList Paging 하기 
+sno : start Row 순서번호
+rowsPerPage : 페이지 당 맴버 명수 =  -->
+	<!-- <select id="mPageList" resultType="com.example.demo.domain.MemberDTO">
+		select * from member 
+		limit #{sno},#{rowsPerPage}
+	</select>
+	<select id="totalRowsCount" resultType="int">
+		select count(*) from member
+	</select> -->
+	
+	<!-- msearchList 작성 -->
+<sql id="msearch">	
+	<if test="keyword != null">
+         <bind name="keyval" value="'%'+keyword+'%'"/>
+    </if>
+    <choose>
+         <!-- id, title, content 에서 keyword가 포함된 글 목록 -->
+         <when test="searchType=='all' and keyword!=null">
+            and ( id Like #{keyval}
+            or name Like #{keyval}
+            or info Like #{keyval} 
+            or rid Like #{keyval} ))
+         </when>
+         <!-- searchType이 컬럼명인 경우 -->
+         <when test="searchType!=null and keyword!=null">
+            (${searchType} Like #{keyval}))
+         </when>
+         <otherwise>)</otherwise>
+      </choose>
+</sql>
+	<select id="mSearchList" resultType="com.example.demo.domain.MemberDTO">
+		select * from member 
+		where (id is Not NULL <include refid="msearch"></include>
+		limit #{sno}, #{rowsPerPage}
+	</select>
+	<select id="mSearchRowsCount" resultType="int">
+		select count(*) from member 
+		where (id is Not NULL <include refid="msearch"></include>
+	</select>
+	
+	
+	
+<!-- selectList -->
+	<select id="selectList" resultType="com.example.demo.domain.MemberDTO">
+		select * from member
+	</select>
+	
+<!-- selectOne -->
+	<select id="selectOne" resultType="com.example.demo.domain.MemberDTO">
+		select * from member where id = #{id}
+		<!-- #{} : 쿼리문에 들어올 값, 인자로 전달되어 들어갈 값 -->
+	</select>
+	
+<!-- selectOne2 -->	
+	<select id="selectOne2" resultType="com.example.demo.domain.MemberDTO">
+		select * from member where jno =#{jno}
+	</select>
+	
+<!-- insert -->
+	<insert id="insert">
+		insert into member values (#{id},#{password},
+		#{name},#{age},#{jno},#{info},#{point},#{birthday},#{rid},#{uploadfile})
+	</insert>
+	
+<!-- update -->
+	<update id="update">
+		update member SET  name = #{name} , age = #{age}, jno = #{jno}, 
+		info = #{info}, point =#{point}, birthday =#{birthday}, rid =#{rid}, uploadfile=#{uploadfile} where id =#{id} 
+	</update>
+	
+<!-- pwUpdate -->
+	<update id="pwUpdate">
+		update member set password =#{password} where id= #{id}
+	</update>
+	
+<!-- delete -->
+	<delete id="delete">
+		delete from member where id = #{id}
+	</delete>	
+</mapper>
