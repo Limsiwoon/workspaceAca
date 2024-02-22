@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. -->
+   <!-- 일단 자동으로 생성된 Tag 들은 너무 많으므로 지우고 작성하는것이 편리     -->
+<!-- project :
+    빌드 파일에 반드시 있어야 하는 최상위 Tag이며 target의 집합체
+    name="생성되는 jar 프로젝트이름 _필수요소 아님"
+    basedir="빌드파일내에서 경로지정의 기본이되는 디렉토리_필수요소 아님"
+    default="지정한 타겟이 없을때 자동으로 실행할 디폴트 타겟 이름_필수요소"-->
+<project basedir="." default="jarfile" name="myMember">
+   <property name="name" value="myMember"/>
+   <property name="src.dir" value="src"/>
+   <property name="build.dir" value="bin"/>
+   <property name="dist.dir" value="dist"/>
+   <property name="copy.dir" value="e:\\MTest"/>
+   
+   <!-- target:
+      하나의 프로젝트에 여러 target이 있을 수 있고 
+      다른 타겟과 의존성을 가질 수 있다.
+      타깃 간의 의존 관계는 target 요소의 depends 속성으로 기술
+      name="타겟이름_필수" ... project Tag의 default 속성에 지정될 수 있음 
+      description="타겟설명_필수요소아님"    -->   
+    <target name="jarfile" description="Only Generate a jar file">
+       <!-- delete:
+          하나의 파일 또는 디렉토리와 그 하위 디렉토리,
+           file 속성에 지정된 파일 (동명 화일이 있으면) 삭제 
+         file="dist/myMember.jar" -->
+       <delete file="${dist.dir}/${name}.jar" />
+       
+       <!-- jar파일생성
+          지정된 파일들을 jar로 묶어줌 -->   
+      <jar destfile="${dist.dir}/${name}.jar">
+         <!--  class 파일 포함 & 제외 -->
+         <fileset dir="${build.dir}">
+            <include name="com/**/*.*" />
+            <!-- 빌드시 제외대상 -->
+            <exclude name="com/ncs/green/test/*.*" />
+         </fileset>
+         
+         <!-- java 소스파일 포함 & 제외 -->
+         <fileset dir="${src.dir}">
+             <include name="com/**/*.*"/>
+            <!-- 빌드시 제외대상 -->
+             <exclude name="com/ncs/green/test/*.*"/>
+         </fileset>
+      </jar>
+       
+       <!-- 생성된 jar 화일을 드라이브에 복사해서 하나 더 만들어주기 위해 
+          먼저 동일 화일명이  있으면 삭제 하기위해 -->
+       <delete file="${copy.dir}/${name}.jar"/>
+       <!-- jar파일복사 -->
+       <copy todir="${copy.dir}" file="${dist.dir}/${name}.jar" />
+   </target>
+</project>
