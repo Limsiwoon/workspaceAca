@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -421,5 +422,17 @@ public class MemberController {
 		model.addAttribute("banana", service.selectList());
 		// return "member/memberList";
 	}
-
+	
+	
+	
+	
+	//~~~~~~ axios 방식 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	//aximlist
+	@GetMapping("/axMemberList")
+	public String axiMemberList(Model model) {
+		model.addAttribute("banana", service.selectList());
+		log.info(" === member List 성공했습니다! HttpStatus.OK "+HttpStatus.OK);
+		return "axTest/axMemberList";
+	}
+	
 }

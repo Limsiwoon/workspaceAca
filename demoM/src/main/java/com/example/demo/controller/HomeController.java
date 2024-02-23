@@ -101,6 +101,7 @@ public class HomeController {
 	
 	@GetMapping("/axtestform")
 	public String axTestForm() {
+		System.out.println("1");
 		return "axTest/axTestForm";
 	}
 }

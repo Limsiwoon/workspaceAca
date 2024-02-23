@@ -249,7 +249,7 @@ function inCheck(){
 
 <body>
 <h2>** Mask World의 Join Form **</h2>
-	<form action="join" method="post" enctype="multipart/form-data">
+	<form action="join" method="post" id="myform" enctype="multipart/form-data">
 	<!-- enctype="multipart/form-data" : 화일 upload 를 가능하게 해줌 
    ** multipart/form-data는 파일업로드가 있는 입력양식요소에 사용되는 enctype 속성의 값중 하나이고, 
        multipart는 폼데이터가 여러 부분으로 나뉘어 서버로 전송되는 것을 의미
@@ -361,7 +361,9 @@ function inCheck(){
                  - submit 진행 : default (또는 return true)
                  - submit 정지 : submit 이벤트를 무효화 해야함 (return false 또는 이벤트.preventDefault())  -->
 					<!-- <button type="button" onclick="inCheck()">ButtonTest</button> -->
-					<input type="reset" name="cancle" value="취소"><br></td>
+					<input type="reset" name="cancle" value="취소">
+					<span class="textline" onclick="axiJoin()">axiJoin</span><br>
+				</td>
 			</tr>
 		</table>
 	</form>
