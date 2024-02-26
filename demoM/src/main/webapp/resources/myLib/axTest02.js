@@ -69,7 +69,7 @@ function axiJoin(){
     // 2) Axios 표정 처리 
     let url= "/rest/rsjoin";
     axios.post(url,formData,{
-            headers:{'Content-Type':''} //option 값이기 때문에 headersdp {} 넣어줘야함.
+            headers:{'Content-Type':'multipartType/form-data'} //option 값이기 때문에 headersdp {} 넣어줘야함.
         }).then(response =>{
             alert(` ** join 성공! => ${response.data}`);
             location.reload();

@@ -16,7 +16,7 @@ public interface MemberService {
 	
 	//pageMaker 함수 필요 
 	public List<MemberDTO> mPageList(SearchCriteria cri);
-	public int totalRowsCount(SearchCriteria cri);
+	public int mTotalRowsCount(SearchCriteria cri);
 
 	
 	List<MemberDTO> selectList();

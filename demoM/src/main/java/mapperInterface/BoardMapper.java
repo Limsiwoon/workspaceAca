@@ -2,11 +2,18 @@ package mapperInterface;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Select;
+
 import com.example.demo.domain.BoardDTO;
 
 import pageTest.SearchCriteria;
 
 public interface BoardMapper {
+	
+	// ** ajax : id별 board List(idbList)
+	@Select("select * from board where id=#{id}")
+	public List<BoardDTO> idbList(String id);
+	
 	
 	//board Check List
 	public List<BoardDTO> bCheckList(SearchCriteria cri);

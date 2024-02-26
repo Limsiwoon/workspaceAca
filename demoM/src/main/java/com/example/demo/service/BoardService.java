@@ -8,6 +8,8 @@ import pageTest.SearchCriteria;
 
 public interface BoardService {
 	
+
+	public List<BoardDTO> idbList(String id);
 	
 	//board Check List
 	public List<BoardDTO> bCheckList(SearchCriteria cri);

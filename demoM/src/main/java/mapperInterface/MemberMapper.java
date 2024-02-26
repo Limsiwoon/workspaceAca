@@ -22,8 +22,8 @@ public interface MemberMapper {
 	
 	
 	//board Check List
-		public List<MemberDTO> mCheckList(SearchCriteria cri);
-		public int mCheckRowsCount(SearchCriteria cri);
+	public List<MemberDTO> mCheckList(SearchCriteria cri);
+	public int mCheckRowsCount(SearchCriteria cri);
 	
 	
 	

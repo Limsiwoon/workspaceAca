@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,9 +20,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.demo.domain.BoardDTO;
 import com.example.demo.domain.JoDTO;
 import com.example.demo.domain.MemberDTO;
 import com.example.demo.domain.UserDTO;
+import com.example.demo.service.BoardService;
 import com.example.demo.service.JoService;
 import com.example.demo.service.MemberService;
 
@@ -128,6 +130,7 @@ import lombok.extern.log4j.Log4j2;
 public class RESTController {
 	MemberService service;
 	JoService jservice;
+	BoardService bservice;
 
 	// 로그인을 위해 passwordEncoder 필요 <- demoConfig에 주입 할 수 있도록 설정을 해두었음.
 	PasswordEncoder passwordEncoder;
@@ -475,54 +478,39 @@ public class RESTController {
 	}// rsjoin
 
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/*
-	// aximlist
-	@PostMapping(value = "/axMemberList")
-	public ResponseEntity<?> aximlist(@RequestBody List<zMemberDTO> dto, Model model) {
-		ResponseEntity<MemberDTO> result = null;
-
-		dto = service.selectList();
-
-		if (dto != null) {
-			result = ResponseEntity.status(HttpStatus.OK).body(dto);
+	@GetMapping("/idblist/{id}")
+	public ResponseEntity<?> idblist(@PathVariable("id") String id){
+		System.out.println("1");
+		ResponseEntity<?> result = null;
 		
-			log.info(" === member List 성공했습니다! HttpStatus.OK "+HttpStatus.OK); } 
-			// 전역변수 이기때문에 userDTO 를 사용할 수 없음 -> userDTO를 전역변수를 넣을 이유가 없음 //왜냐하면, 오류 상황에서
-			// userDTO 를 받을 이유가 없기 때문에.
-			// log.info(" === member List 실패했습니다! HttpStatus.BAD_GATEWAY "+HttpStatus.
-			// BAD_GATEWAY);
+		List<BoardDTO> list = bservice.idbList(id);
+		// => 출력  DATA 유/ 무 
+		if( list !=null && list.size()>0 ) {
+			result=ResponseEntity.status(HttpStatus.OK).body(list);
+			log.info("** idbList HttpStatus.ok =>"+HttpStatus.OK);
 		} else {
-			//실패 
-		 	result = ResponseEntity.status(HttpStatus.BAD_GATEWAY) .body(null);
+			result=ResponseEntity.status(HttpStatus.BAD_GATEWAY)
+					.body("~~~ 출력할 데이터 없음~~~");
+			log.info("** idbList HttpStatus.BAD_GATEWAY =>"+HttpStatus.BAD_GATEWAY);
 		}
-		return result;
+		 return result;
 	}
-
-	
-	*/
 	
 	
-	
-	
-	
-	
-	
-	
-	
+	@DeleteMapping("/axidelete/{ii}")
+	public ResponseEntity<?> axidelete(@PathVariable("ii") String id){
+		System.out.println("1");
+		
+		if(service.delete(id)>0) {
+			log.info("** axiDelete HttpStatus.OK => "+HttpStatus.OK);
+			return new ResponseEntity<String>("** 삭제 성공 ** ",HttpStatus.OK);
+		}else {
+			log.info("** axiDelete HttpStatus.BAD_GATEWAY => "+HttpStatus.BAD_GATEWAY);
+			return new ResponseEntity<String>("** 삭제 실패 , DATA_NOT Found** ",HttpStatus.BAD_GATEWAY);
+			
+		}
+		
+	}
 	
 	
 	

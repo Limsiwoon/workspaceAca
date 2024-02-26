@@ -26,11 +26,18 @@
 	<th>Birthday</th>
 	<th>추천인</th>
 	<th>프로필 사진</th>
+	<th>DELETE</th>
 </tr>
 <c:if test="${!empty requestScope.banana}">
 	<c:forEach var="banana" items="${requestScope.banana}">
-	<tr>
-		<td>${banana.id}</td>
+	<tr><!-- **idbList : id 별 boardList
+				=> 선택된 id를 function 에 전달(매개변수를 활용)
+				  	idbList('banana')
+				  	EL 태그로 인자를 넣을 수 있으나, 표현방식에 주의해주어야 함. 		
+				  	"idbList('${banana.id}')" 작성하면, 
+				  	외부에 전달 가능함 
+		 -->
+		<td><span class="textlink" onclick ="idbList('${banana.id}')">${banana.id}</span></td>
 		<td>${banana.name}</td>
 		<td>${banana.age}</td>
 		<td>${banana.jno}</td>
@@ -40,11 +47,17 @@
 		<td>${banana.rid}</td>
 		<td><img alt="yourImg" width="50" height="70" 
 			src="/resources/uploadImages/${banana.uploadfile}"></td>
+		<!-- **DELTE 기능
+			=> 선택된 id를 function 에 전달(매개변수를 활용)
+			=> 결과 성공 / 실패 여부만 확인 할 수 있으면 됨
+			=> 성공 : DELETED 로 변경 . onClick = 이벤트 해제
+		 -->
+		<td ><span class="textlink" onclick="axiDelete('${banana.id}')" id="${banana.id}" >delete</span></td>
 	</tr>
 	</c:forEach>
 </c:if>
 <c:if test="${empty requestScope.banana}">
-	<tr><td colspan="9">!!출력할 데이터 없습미다!!</td></tr>
+	<tr><td colspan="10">!!출력할 데이터 없습미다!!</td></tr>
 </c:if>
 </table>
 <hr>

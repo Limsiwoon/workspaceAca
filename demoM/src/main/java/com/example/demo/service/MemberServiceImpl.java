@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.domain.BoardDTO;
 import com.example.demo.domain.MemberDTO;
 
 import mapperInterface.MemberMapper;
@@ -52,7 +53,7 @@ public class MemberServiceImpl implements MemberService {
 		return mapper.mSearchList(cri);
 	}
 	
-	public int totalRowsCount(SearchCriteria cri) {
+	public int mTotalRowsCount(SearchCriteria cri) {
 		return mapper.mSearchRowsCount(cri);
 	}
 	

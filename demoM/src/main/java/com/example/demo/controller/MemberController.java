@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.io.Console;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -90,7 +91,7 @@ public class MemberController {
 		pageMaker.setCri(cri);
 		pageMaker.setMappingName(mappingName);
 		// totalRowsCount에서는 페이지가 몇장이 나와야 하는지 계산해줌
-		pageMaker.setTotalRowsCount(service.totalRowsCount(cri));
+		pageMaker.setTotalRowsCount(service.mTotalRowsCount(cri));
 		model.addAttribute("pageMaker", pageMaker);
 
 		// 확인용
@@ -435,4 +436,45 @@ public class MemberController {
 		return "axTest/axMemberList";
 	}
 	
+	
+	// Ajax Member_Paging
+	// => ver01 : axmcri 만 구현 ( search  기능만 구현 )
+	// => ver02 : "/axmcheck" 요청도 처리 할 수 있도록 구현
+	//			-> mappingName 에 "check"가 포함되어 잇다면, service를 아래 메서드를 호출 하도록 작성. 
+	//			service.mCheckList(cri),mCheckRowsCount(cri)
+	@GetMapping({"/axmcri" , "/axmcheck"})
+	public String axmcri(HttpServletRequest request, Model model, SearchCriteria cri, PageMaker pageMaker) {
+		// 1) criteria  처리 
+		// => currPage, rowsPerPage 값들은 Parameter 로 전달되어 자동으로 cri에 set
+		
+		cri.setSnoEno();
+		//System.out.println("1");
+		
+		// 2) 요청 확인 & serive처리 
+		// mPageList 는 search할 것을 명해주고
+		String mappingName = 
+				request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/") + 1);
+		pageMaker.setMappingName(mappingName);
+		pageMaker.setCri(cri);
+		
+		System.out.println(mappingName);
+
+		if( mappingName.contains("check")) {
+			// => Check 조건 처리 
+			System.out.println(cri);
+			model.addAttribute("banana", service.mCheckList(cri));
+			pageMaker.setTotalRowsCount(service.mCheckRowsCount(cri));
+			
+	
+		}else {
+			// => Search 조건 처리 
+			System.out.println("search");
+			model.addAttribute("banana", service.mPageList(cri));
+			pageMaker.setTotalRowsCount(service.mTotalRowsCount(cri));
+		}
+		
+		// 3) view 처리 
+		model.addAttribute("pageMaker", pageMaker);
+		return "axTest/axmPageList";
+	}
 }

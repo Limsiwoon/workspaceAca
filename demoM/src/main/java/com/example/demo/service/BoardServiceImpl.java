@@ -16,7 +16,12 @@ public class BoardServiceImpl implements BoardService {
 	@Autowired
 //	BoardDAO dao;
 	BoardMapper mapper;
+
 	
+
+	public List<BoardDTO> idbList(String id){
+		return mapper.idbList(id);
+	}
 	//board Check List
 	
 	public List<BoardDTO> bCheckList(SearchCriteria cri){
