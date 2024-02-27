@@ -513,11 +513,28 @@ public class RESTController {
 	}
 	
 	
+	@GetMapping("/jodetail/{jjno}")
+	public ResponseEntity<JoDTO> jodetail(@PathVariable("jjno") int jno){
+		System.out.println("jode");
+		
+		ResponseEntity<JoDTO> result = null;
+		JoDTO jdto= new JoDTO();
+		
+		jdto = jservice.joSelectOne(jno);
+		
+		if( jservice.joSelectOne(jno)!=null ){
+			result = ResponseEntity.status(HttpStatus.OK).body(jdto);
+			log.info("** jodetail Test HttpStatus.OK =>" + HttpStatus.OK);
+			log.info("** jodetail Test dto =>" + jdto);
+			return result;
+		} else {
+			result = ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(jdto);
+			log.info("** jodetail Test HttpStatus.BAD_GATEWAY =>" + HttpStatus.BAD_GATEWAY);
+		}
+		return result;
+	}
 	
-	
-	
-	
-	
+
 	
 	
 	

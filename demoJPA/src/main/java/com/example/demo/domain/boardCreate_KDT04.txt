@@ -1,0 +1,120 @@
+** 게시판 관리
+
+
+1. board Table Create
+	=> 필요 컬럼. 
+		:글번호(seq)-p.key, id, title, content, regdate, cnt(조회수), 댓글(root, step, indent)  
+	=> 생성문
+		: create table board(
+			seq		int(5) 			Primary Key Auto_Increment,
+			id		varchar(10)		not null,
+			title	varchar(200)	not null,
+			content	Text(2000),
+			regdate	DateTime 		default Current_TimeStamp,
+			cnt		int				default 0,
+			root	int				default 0,
+			step	int				default 0,
+			indent	int				default 0	
+		);
+		
+	=> 삽입
+	insert into board(id,title,content) values ('lsw','Spring이란?','처음엔 복잡하고 난해하지만 친해지면 매우편리하다^^'); 
+	insert into board(id,title,content) values ('kso','의존성 주입이란?','dependency injection_ 객체간의 의존관계를 객체 자신이 아닌 외부의 조립기가 수행한다.'); 
+	insert into board(id,title,content) values ('img4029','느슨한 결합(loose coupling)','객체는 인터페이스에 의한 의존관계만을 알고 있으며 이 의존관계는 구현 클래스에 대한 차이를 모르는채 서로 다른 구현으로 대체가 가능'); 
+	insert into board(id,title,content) values ('jyw97','Spring의 DI 지원','Spring Container가 DI 조립기(Assembler)를 제공'); 
+	insert into board(id,title,content) values ('jjang9','Spring 설정파일','Spring Container가 어떻게 일할 지를 설정하는 파일'); 
+	=> 출력
+	select seq, id, title, regdate, cnt, root from board;
+	=> 수정
+	update board set root=seq;
+	
+	
+	=> BoardDAO CRUD 구현
+
+	=> insert 구문 
+		- insert 에서 seq 와 root 가 동일한 값으로 입력되어야함. 
+		- seq 를 Auto_Incremenet 로 하면 불가능함
+		- 그러므로 ifNull 함수 적용 가능 (oracle의 nvl)
+
+		
+		insert into board values(
+			(select* from (select ifNull(max(seq),0)+1 from board) as temp),
+			,"banana","여기는 title", "여기는 content", Current_TimeStamp, 0, root, 0, 0
+		   ); 
+		= insert into board values(
+			(select* from (select ifNull(max(seq),0)+1 from board) as temp),
+			?,?,?, Current_TimeStamp, 0, (select* from (select ifNull(max(seq),0)+1 from board) as temp), 0, 0
+		   );
+		
+	=> update 구문
+		- title, content 만 수정
+		
+		
+2. Project
+	2.1 ) Java 
+	=> BoardDTO, BoardDAO, BoardService, BoardController
+	
+	2.2 ) Jsp
+	=> boardList, BoardDetail, boardInsert, boardUpdate
+	=> Login 한 경우에만 List 에서 title 클릭 시 detail 로 
+	=> Login 한 경우에만 List 에서 글 등록 할 수 있도록 메뉴 표시
+	=> 내 글인 경우에만 boardDetail에 글 수정과 글 삭제 메뉴에 표시하여 수정 또는 삭제할 수 있도록 만듦.
+	
+	2.3 ) 조회수 증가
+	=> <방법1> sql = update board set cnt = cnt +1 where seq=?
+	=> <방법2> Java code 에서 cnt+1 전달하면 set cnt=? 도 가능  
+	
+	=> 조건 : 글쓴이와 글보는이가 다른경우
+	=> 어디서 detail에서
+		
+	2.4) 계층적 답변형 게시판의 답글달기
+
+	=> board 조회
+		select seq, id, title, root, step, indent from board order by root desc, step asc;
+
+	=> 각 컬럼의 역할
+		-> root: 원글의 seq
+		-> step: 댓글의 출력순서( 부모글 +1 , 이전댓글들 step+1 로 수정 )
+		-> indent: 댓글의 레벨 ( 부모글 +1 )
+	=> 원글  -> root: 자신의 seq ,  step: 0 , indent: 0
+	=> 첫댓글 -> root: 원글의 seq ,  step: 1 - 2 - 3 로 변경, indent: 1   
+	=> 2댓글 -> root: 원글의 seq ,  step: 1 -2 , indent: 1
+	=> 3댓글 -> root: 원글의 seq ,  step: 1 , indent: 1  
+		
+	=> 댓글 입력 Form 과 controller의 메핑메서드, 메뉴추가	
+		
+		
+		
+		
+=================================================================	
+=================================================================	
+** Upload File
+1) Table
+=> file 정보(경로와 파일명) 보관 컬럼 추가 :uploadfile varchar(100) default 'siba.png';
+	sql = 
+	alter table member ADD uploadfile varchar(100) default 'siba.png';
+
+=> 기본값 넣어놓기
+	sql = 
+	update member set uploadfile='lll.jpg' where jno=1;
+	update member set uploadfile='adv.gif' where jno=2;
+	update member set uploadfile='banana2.gif' where jno=3;
+	update member set uploadfile='phello.gif' where jno=4;
+	update member set uploadfile='pica01.gif' where jno=7;
+	
+	select id,name,jno,uploadfile from member;
+
+=> IDE(이클립스)에 준비 
+	webapp/resources/uploadImages/ 에 위의 파일들을 복사해 두기.
+
+2) Java Code	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
