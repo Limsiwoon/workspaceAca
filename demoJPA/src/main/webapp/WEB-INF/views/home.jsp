@@ -9,16 +9,16 @@
 </head>
 
 <body>
-<h2> ** Hello Spring_BOOT MYBATIS! **</h2>
+<h2> ** Hello Spring_BOOT JPA! **</h2>
 <P>Home_time : ${serverTime}.</P>
 <hr>
 <c:if test="${!empty sessionScope.loginName}">
-	<h3>${sessionScope.loginName}님 안녕! Hello? <br> 로그인 해줘서 고마워. 약속대로 마스크 벗었어</h3><hr>
-	<img alt="마스크벗음" src="/resources/images/basicman4.png" width=300px height=300px>
+	<h3>${sessionScope.loginName}님 안녕! Hello? <br></h3><hr>
+	<img alt="마스크벗음" src="/resources/images/gunbaeting.jpg" width=500px height=300px>
 </c:if>
 <c:if test="${empty sessionScope.loginID && empty requestScope.message}">
-	<h3>안녕? Hello? Spring_MVC02에 잘 왔어! <br> 마스크를 벗기고싶다면 로그인 부탁해! <br></h3><hr>
-	<img alt="마스크씀" src="/resources/images/basicman1.jpg" width=300px height=300px>
+	<h3>안녕? Hello? Spring_BOOT JPA에 잘 왔어! <br><br></h3><hr>
+	<img alt="마스크씀" src="/resources/images/gunbae.jpeg" width=600px height=300px>
 </c:if>
 <hr>
 <c:if test="${!empty requestScope.message}">
@@ -48,6 +48,11 @@
 	&nbsp;<a href="board/bPageList">Bpage</a>
 	&nbsp;<a href="/axtestform">AjaxTest</a>
 	<br>
+	&nbsp;<a href="/ginsert">G_insert</a>
+	&nbsp;<a href="/glist">G_List</a>
+	&nbsp;<a href="/gupdate">G_update</a>
+	&nbsp;<a href="/gpage">G_Page</a>
+	
 	<!-- &nbsp;<a href="etest">Exception</a>
 	&nbsp;<a href="member/log4jTest">@log4jTest</a> -->
 	<br>
