@@ -84,8 +84,8 @@ function inCheck(){
 		</tr>
 		<tr height='40'>
 			<td></td>
-			<td><input type="submit" value="수정" id="submitTag" onClick="return inCheck()"><br>
-				&nbsp;&nbsp;<input type = "reset" value="취소">
+			<td><input type="submit" value="수정" id="submitTag" onClick="return inCheck()">&nbsp;&nbsp;
+				<input type = "reset" value="취소">
 			</td>
 		</tr>
 	</form>

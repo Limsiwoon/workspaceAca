@@ -21,17 +21,17 @@
 	<th>Jno</th>
 	<th>Jname</th>
 	<th>Captain</th>
-	<th>Name</th>
+	<!-- <th>Name</th> -->
 	<th>Project</th>
 	<th>Slogan</th>
 </tr>
 <c:if test="${!empty requestScope.jinfo}">
 	<c:forEach var="jinfo" items="${requestScope.jinfo}">
 	<tr>
-		<td><a href="joDetail?joC=${jinfo.jno}&">${jinfo.jno}</a></td>
+		<td><a href="joDetail?jCode=D&jno=${jinfo.jno}">${jinfo.jno}</a></td>
 		<td>${jinfo.jname}</td>
 		<td>${jinfo.captain}</td>
-		<td>${jinfo.name}</td>
+		<%-- <td>${jinfo.name}</td> --%>
 		<td>${jinfo.project}</td>
 		<td>${jinfo.slogan}</td>
 	</tr>
@@ -45,7 +45,7 @@
 <hr>
 <a href="joJoinForm">조 등록하기</a> 
 <hr>
-<a href="/spring02/home">Home</a> 
+<a href="/home">Home</a> 
 <!-- 서블릿으로 가는 것이 아니기 때문에,  -->
 <a href="javascript:history.go(-1)">이전으로 돌아가기</a>&nbsp;
 </body>

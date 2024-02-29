@@ -15,7 +15,7 @@
 		<th>Jno</th>
 		<th>Jname</th>
 		<th>Captain</th>
-		<th>Name</th>
+		<!-- <th>Name</th> -->
 		<th>Project</th>
 		<th>Slogan</th>
 
@@ -25,7 +25,7 @@
 		<th>${requestScope.jinfo.jno}</th>
 		<th>${requestScope.jinfo.jname}</th>
 		<th>${requestScope.jinfo.captain}</th>
-		<td>${requestScope.jinfo.name}</td>
+		<%-- <td>${requestScope.jinfo.name}</td> --%>
 		<th>${requestScope.jinfo.project}</th>
 		<th>${requestScope.jinfo.slogan}</th>
 	</tr>
@@ -71,8 +71,8 @@
 <hr>
 
 
-&nbsp;<a href="joDetail?joC=100+${jinfo.jno}">조 수정하기</a>&nbsp;
-&nbsp;<a href="joDelete?joC=${jinfo.jno}">조 삭제하기</a>&nbsp;
+&nbsp;<a href="joDetail?jCode=U&jno=${jinfo.jno}">조 수정하기</a>&nbsp;
+&nbsp;<a href="joDelete?jCode=${jinfo.jno}">조 삭제하기</a>&nbsp;
 <hr>
 &nbsp;<a href="/home">HOME</a>&nbsp;
 &nbsp;<a href="javascript:history.go(-1)">이전으로 돌아가기</a>&nbsp;

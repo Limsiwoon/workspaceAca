@@ -25,12 +25,12 @@ import lombok.NoArgsConstructor;
 
 @Table(name="member") // 테이블 맵핑 
 @Data
-@AllArgsConstructor
+@AllArgsConstructor // 생성자
 @NoArgsConstructor
 @Builder
 public class Member {
 	
-	@Id//프라이머리키를 알려주는 것
+	@Id     //프라이머리키를 알려주는 것
 	// ** @GeneratedValue(strategy = GenerationType.IDENTITY) 
 	// => id로 설정된 기본키의 값을 자동으로 생성할때 추가적으로 사용
 	// => strategy 속성: 키 생성전략
@@ -41,11 +41,13 @@ public class Member {
 	private String id; // Primary_key
 	
 	@Column(updatable = false)//자동을 업데이트를 하지 않음을 나타내 줘야함 => 별도 수정 (false)
+	
 	// ** @Column(name="id", nullable=false, length=10)
 	// => 프로퍼티의 이름과 테이블의 칼럼명 같다면 생략 가능하지만, 다른 경우에는 @Column 으로 지정
 	// => 컬럼에 다양한 속성 지정 가능 (nullable, name, length, insertable, updatable 등) 
 	// => JPA는 INSERT, UPDATE, DELETE의 동작이 보통과 다르기 때문에 예상치못한 실수를 방지하기 위해
 	//     insertable 과 updateble 속성을 false로 하여 읽기전용 매핑설정을 할수있다.
+	//		수정할 수 있는가 없는가, 입력을 할 수 있는가 없는가
 	//     이렇게 하면 JPA가 자동으로 생성하는 쿼리에서 제외된다.
 	// => columnDefinition 으로 default 값 지정 가능
 	//    @Column(columnDefinition="varchar(10) default 'apple'")

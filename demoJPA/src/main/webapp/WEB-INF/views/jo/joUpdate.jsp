@@ -17,7 +17,7 @@
 			<!-- readonly 속성은 <input> 요소의 입력 필드가 읽기 전용임 -->
 	</tr>
 	<tr height="40" >
-		<td><label for="jname"> JName</label></td>
+		<td><label for="jname"> JName </label></td>
 		<td><input type="text" name="jname" id="jname" value="${requestScope.jinfo.jname}"></td>
 	</tr>
 	<tr height="40">

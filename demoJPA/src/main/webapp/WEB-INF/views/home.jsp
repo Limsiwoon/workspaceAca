@@ -52,6 +52,8 @@
 	&nbsp;<a href="/glist">G_List</a>
 	&nbsp;<a href="/gupdate">G_update</a>
 	&nbsp;<a href="/gpage">G_Page</a>
+	<br>
+	&nbsp;<a href="member/mjoinList">mJoinList</a>&nbsp;
 	
 	<!-- &nbsp;<a href="etest">Exception</a>
 	&nbsp;<a href="member/log4jTest">@log4jTest</a> -->

@@ -1,57 +1,43 @@
 package com.example.demo.service;
 
 import java.util.List;
+import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.domain.JoDTO;
+import com.example.demo.entity.Jo;
+import com.example.demo.repository.JoRepository;
 
-import mapperInterface.JoMapper;
+import lombok.RequiredArgsConstructor;
 
-//** Service
-//=> 요청클래스 와 DAO클래스 사이의 연결(완충지대) 역할
-//=> 요청클래스(컨트롤러) 와 DAO클래스 사이에서 변경사항이 생기더라도 서로 영향   받지않도록해주는 역할
-// 결합도는 낮추고, 응집도는 높인다
-
-//** interface 자동완성 
-//=> Alt + Shift + T  
-//=> 또는 마우스우클릭 PopUp Menu 의  Refactor - Extract Interface...
-
-
-//@Service
+@Service
+@RequiredArgsConstructor
 public class JoServiceImpl implements JoService {
-	
-	/*
-	 * @Autowired 
-	 * JoDAO dao;
-	 */
-	
-	//@Autowired
-	JoMapper mapper;
-	
+
+	private final JoRepository repository;
+
 	@Override
-	public List<JoDTO> joSelectList(){
-		return mapper.joSelectList();
+	public List<Jo> selectList() {
+		return repository.findAll();
 	}
-	
+
 	@Override
-	public JoDTO joSelectOne(int jno){
-		return mapper.joSelectOne(jno);
+	public Jo selectOne(int jno) {
+		Optional<Jo> result = repository.findById(jno);
+		if (result.isPresent())
+			return result.get(); // return의 그 값을 받아오는 것.
+		else
+			return null;
 	}
-	
+
 	@Override
-	public int joupdate(JoDTO jdto) {
-		return mapper.joupdate(jdto);
+	public Jo save(Jo entity) {
+		return repository.save(entity);
 	}
-	
+
 	@Override
-	public int joinsert(JoDTO jdto) {
-		return mapper.joinsert(jdto);
+	public void delete(int jno) {
+		repository.deleteById(jno);
 	}
-	@Override
-	public int joDelete(int jno) {
-		return mapper.joDelete(jno);
-	}
-	
+
 }

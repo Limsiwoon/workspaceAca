@@ -2,39 +2,40 @@ package com.example.demo.service;
 
 import java.util.List;
 
-import com.example.demo.domain.MemberDTO;
+import org.apache.ibatis.annotations.Param;
 
-import pageTest.SearchCriteria;
+import com.example.demo.domain.MemberDTO;
+import com.example.demo.entity.Member;
 
 public interface MemberService {
+	// 1) JPARepository Method 규약
+	// => Jno 별 Member 출력하기
+	List<Member> findByJno(int jno);
 
-	//board Check List
-	public List<MemberDTO> mCheckList(SearchCriteria cri);
-	public int mCheckRowsCount(SearchCriteria cri);
-	
-	
-	
-	//pageMaker 함수 필요 
-	public List<MemberDTO> mPageList(SearchCriteria cri);
-	public int mTotalRowsCount(SearchCriteria cri);
+	// 2)
+	// 2.1) JPQL(Java Persistence Query Language)
+	void updatePassword(@Param("id") String id, @Param("password") String password);
 
-	
-	List<MemberDTO> selectList();
+	// 2.2) Native_query 사용
+	// void updatePassword2(@Param("id") String id, @Param("password") String
+	// password);
+
+	// ** Join
+	List<MemberDTO> findMemberJoin();
+
+	// selectList
+	List<Member> selectList();
 
 	// selectOne
-	MemberDTO selectOne(String id);
+	Member selectOne(String id);
 
-	List<MemberDTO> selectOne2(int jno);
+	// insert + update
+	Member save(Member entity);
 
-	// insert
-	int insert(MemberDTO dto);
+	// password Update
+	Member pwUpdate(Member entity);
 
-	// update
-	int update(MemberDTO dto);
-	
-	int pwUpdate(MemberDTO dto);
+	// delete
+	void deleteById(String id);
 
-	int delete(String id);
-
-	
 }
