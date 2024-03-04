@@ -15,10 +15,12 @@ import com.example.demo.domain.GuestbookDTO;
 import com.example.demo.domain.PageRequestDTO;
 import com.example.demo.domain.PageResultDTO;
 import com.example.demo.entity.Guestbook;
+import com.example.demo.entity.Testkey;
+import com.example.demo.entity.TestkeyId;
 import com.example.demo.service.GuestbookService;
+import com.example.demo.service.TestkeyService;
 
 import lombok.AllArgsConstructor;
-
 
 //-----------------------------------------------------------------
 //** Locale : (사건등의 현장), 다국어 지원 설정을 지원하는 클래스
@@ -78,121 +80,206 @@ import lombok.AllArgsConstructor;
 
 //** Lombok 의 @Log4j Test
 
-
 @Controller
 @AllArgsConstructor
 public class HomeController {
-	
+	TestkeyService tservice;
+
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// ** JPA 복합키 실습 (@IdClass 방법)
+	@GetMapping("/tinsert")
+	public String tinsert() {
+		Testkey entity = Testkey.builder().id("green12").no(2).name("김그린").count(1) // JPA save 에서는 MySql에서 정의한 default
+																					// 1
+																					// 적용안됨.
+				.build();
+		try {
+			tservice.save(entity);
+			System.out.println("** Testkey SAVE => " + entity);
+		} catch (Exception e) {
+			System.out.println("** SAVE Exception => " + e.toString());
+		}
+		return "redirect:home";
+	}
+
+	// => Update
+	@GetMapping("/tupdate")
+	public String tupdate() {
+		// => Test Data 작성
+		String id = "green";
+		int no = 1;
+		int count = 10;
+		try {
+			tservice.updateCount(id, no, count);
+			System.out.println("** Testkey Update count값 누적=> " + id + no + ", " + count);
+		} catch (Exception e) {
+			System.out.println("** UPDATE Exception => " + e.toString());
+		}
+		return "redirect:home";
+	}
+
+	// => DUPLICATE KEY UPDATE (장바구니 응용) => 누적 하기 위한 것.
+	// 없으면 Save 있으면 Update
+	@GetMapping("/tdupupdate")
+	public String tdupupdate() {
+		// => Test Data 작성
+		String id = "banana";
+		int no = 2;
+		String name = "바나나";
+		int count = 1;
+		try {
+			tservice.dupUpdateCount(id, no, name, count);
+			System.out.println("** Testkey Update count값 누적=> " + id + no + ", " + count);
+		} catch (Exception e) {
+			System.out.println("** DupUpdate Exception => " + e.toString());
+		}
+		return "redirect:home";
+	}
+
+	// ** default 메서드 활용 update
+	@GetMapping("/tcalcCount")
+
+	public String tcalcCount() {
+		// => Test Data 작성
+		String id = "green";
+		int no = 1;
+		int count = 10;
+		try {
+			tservice.calcCount(id, no, count);
+			System.out.println("** calcCount count+no+100 => " + id + no + ", " + count);
+		} catch (Exception e) {
+			System.out.println("** calcCount Exception => " + e.toString());
+		}
+		return "redirect:home";
+	}
+
+	@GetMapping("/testlist")
+	public String testlist() {
+
+		List<Testkey> list = tservice.selectList();
+		for (Testkey t : list) {
+			System.out.println(t);
+		}
+		return "redirect:home";
+	}
+
+	@GetMapping("/tdetail")
+	// => 퀴리스트링으로 Test : /tdetail?id=apple&no=1
+	public String tdetail(TestkeyId testid) {
+		System.out.println("tdetail => " + tservice.selectOne(testid));
+		return "redirect:home";
+	}
+
+	@GetMapping("/tdelete")
+	// => 퀴리스트링으로 Test : /tdelete?id=green&no=1
+	public String tdelete(TestkeyId testid) {
+		try {
+			tservice.delete(testid);
+			System.out.println("** tdelete 삭제성공 **");
+		} catch (Exception e) {
+			System.out.println("** tdelete Exception => " + e.toString());
+		}
+		return "redirect:home";
+	}
+
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 	GuestbookService service;
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
-	//@GetMapping(value={"/", "/home"})
+
+	// @GetMapping(value={"/", "/home"})
 	// => void : 요청명.jsp 를 viewName 으로 처리함 (home.jsp)
-	//           그러므로 "/" 요청은 .jsp 를 viewName 으로 찾게됨(주의) 
-	// => Boot 의 매핑메서드 에서 "/" 요청은 적용안됨(무시됨) 
-	//     WebMvcConfig 의 addViewControllers 메서드로 해결
+	// 그러므로 "/" 요청은 .jsp 를 viewName 으로 찾게됨(주의)
+	// => Boot 의 매핑메서드 에서 "/" 요청은 적용안됨(무시됨)
+	// WebMvcConfig 의 addViewControllers 메서드로 해결
 	@GetMapping(value = "/home")
 	public void home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
-		
+
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
+
 		String formattedDate = dateFormat.format(date);
-		
-		model.addAttribute("serverTime", formattedDate );
-		
+
+		model.addAttribute("serverTime", formattedDate);
+
 	}
-	
+
 	@GetMapping("/axtestform")
 	public String axTestForm() {
 		System.out.println("1");
 		return "axTest/axTestForm";
 	}
-	
-	
+
 	@GetMapping("/ginsert")
 	public String ginsert() {
-		GuestbookDTO dto = GuestbookDTO.builder()
-								.title("JPA Insert Test")
-								.content("입력이 솔솔 된다~")
-								.writer("admin1")
-								.build();
-		System.out.println("** guest Insert => "+ service.register(dto) );
-	
+		GuestbookDTO dto = GuestbookDTO.builder().title("JPA Insert Test").content("입력이 솔솔 된다~").writer("admin1")
+				.build();
+		System.out.println("** guest Insert => " + service.register(dto));
+
 		return "redirect:home";
 	}
-	
+
 	@GetMapping("/glist")
 	public String glist() {
-		List<Guestbook> list = service.selectList(); 
-		for(Guestbook g : list) {
-	         System.out.println(g+", regDate ="+g.getRegDate()+", modDate="+g.getModDate() );
-	         System.out.println(" ");
+		List<Guestbook> list = service.selectList();
+		for (Guestbook g : list) {
+			System.out.println(g + ", regDate =" + g.getRegDate() + ", modDate=" + g.getModDate());
+			System.out.println(" ");
 		}
 		System.out.println("** guest List");
-		
+
 		return "redirect:home";
 	}
-	
+
 	@GetMapping("/gupdate")
 	public String gupdate() {
-		GuestbookDTO dto = GuestbookDTO.builder()
-				.gno(3L)
-				.title("JPA Update Test")
-				.content("수정이 솔솔 된다~")
-				.writer("banana")
-				.build();
-		
-		System.out.println("** guest update => "+ service.register(dto) );
+		GuestbookDTO dto = GuestbookDTO.builder().gno(3L).title("JPA Update Test").content("수정이 솔솔 된다~")
+				.writer("banana").build();
 
-		
+		System.out.println("** guest update => " + service.register(dto));
+
 		return "redirect:home";
 	}
-	
+
 	@GetMapping("/gdetail")
 //	=> query string으로 작성. / gdetail?gno=2
 	public String gdetail(Long gno) {
-		System.out.println(" ** g detail => " +service.selectOne(gno) );
-		
+		System.out.println(" ** g detail => " + service.selectOne(gno));
+
 		return "redirect:home";
 	}
-	
+
 	@GetMapping("/gdelete")
-	//	=> query string으로 작성. /gdelete?gno=4
+	// => query string으로 작성. /gdelete?gno=4
 	public String gdelete(Long gno) {
 		try {
 			service.delete(gno);
-			System.out.println(" ** G Delete 성공 -> " +gno);
-			
+			System.out.println(" ** G Delete 성공 -> " + gno);
+
 		} catch (Exception e) {
-			System.out.println(" ** guest delete Exception => "+e.toString() );
+			System.out.println(" ** guest delete Exception => " + e.toString());
 			// => 자료가 없으면 org.springframework.dao.EmptyResultDataAccessException 발생확인
 		}
-		
+
 		return "redirect:home";
 	}
-	
-	//** JPA Paging & Sort ===================
+
+	// ** JPA Paging & Sort ===================
 	// 출력할 PageNo , size 한 페이지에 담을 row 갯수를 입력
-	
+
 	@GetMapping("/gpage")
 	public String gpage() {
-		PageRequestDTO requestDTO = PageRequestDTO.builder()
-									.page(3).size(5).build();
-		
-		PageResultDTO<GuestbookDTO,Guestbook> resultDTO =
-					service.pageList(requestDTO); 
-		
+		PageRequestDTO requestDTO = PageRequestDTO.builder().page(3).size(5).build();
+
+		PageResultDTO<GuestbookDTO, Guestbook> resultDTO = service.pageList(requestDTO);
+
 		System.out.println(" ** Page List => " + requestDTO.getPage());
-		for( GuestbookDTO g:resultDTO.getDtolist() ) {
+		for (GuestbookDTO g : resultDTO.getDtolist()) {
 			System.out.println(g);
 		}
-		
-		
+
 		return "redirect:home";
 	}
-	
 
-	
 }

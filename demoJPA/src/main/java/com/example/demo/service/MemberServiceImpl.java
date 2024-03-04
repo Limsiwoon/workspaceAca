@@ -2,14 +2,15 @@
 package com.example.demo.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.domain.MemberDTO;
 import com.example.demo.entity.Member;
+import com.example.demo.repository.MemberDSLRepositoryImpl;
 import com.example.demo.repository.MemberRepository;
+import com.example.demo.repository.MyRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,11 +20,14 @@ import lombok.RequiredArgsConstructor;
 public class MemberServiceImpl implements MemberService { // 전역 변수 처리
 
 	private final MemberRepository repository;
+	private final MyRepository emrepository;
+	private final MemberDSLRepositoryImpl dslrepository;
 
 	// 1) JPARepository Method 규약
 	// => Jno 별 Member 출력하기
 	public List<Member> findByJno(int jno) {
-		return repository.findByJno(jno);
+		// return repository.findByJno(jno);
+		return dslrepository.findMemberJnoDSL(jno);
 	}
 
 	// 2) @Query선언을 이용한 직접쿼리 선언
@@ -35,26 +39,29 @@ public class MemberServiceImpl implements MemberService { // 전역 변수 처�
 	// ** Join
 	@Override
 	public List<MemberDTO> findMemberJoin() {
-		return repository.findMemberJoin();
+		// return repository.findMemberJoin();
+		return dslrepository.findMemberJoinDSL2();
 	}
 	// JPA Repository 로 작성 되어 있기 때문에, 그에 맞는 CRUD를 사용해야함
 
 	// selectList
 	@Override
 	public List<Member> selectList() {
-		return repository.findAll();
+		// return repository.findAll();
 		// repository에 갖고 있는 함수.
+		return emrepository.emMemberList();
 	}
 
 	// selectOne
 	@Override
 	public Member selectOne(String id) {
 
-		Optional<Member> result = repository.findById(id);
-		if (result.isPresent())
-			return result.get(); // return의 그 값을 받아오는 것.
-		else
-			return null;
+		/*
+		 * Optional<Member> result = repository.findById(id); if (result.isPresent())
+		 * return result.get(); // return의 그 값을 받아오는 것. else return null;
+		 */
+
+		return emrepository.emMemberDetail(id);
 	}
 
 	// insert + update = save

@@ -54,6 +54,12 @@
 	&nbsp;<a href="/gpage">G_Page</a>
 	<br>
 	&nbsp;<a href="member/mjoinList">mJoinList</a>&nbsp;
+	<br>
+	&nbsp;<a href="/tinsert">TSave</a>&nbsp; 
+	&nbsp;<a href="/tupdate">TUpdate</a>&nbsp; 
+	&nbsp;<a href="/tdupupdate">TDupUpdate</a>&nbsp; 
+	&nbsp;<a href="/tcalcCount">TCalc</a>&nbsp; 
+	&nbsp;<a href="/testlist">TList</a>&nbsp; 
 	
 	<!-- &nbsp;<a href="etest">Exception</a>
 	&nbsp;<a href="member/log4jTest">@log4jTest</a> -->

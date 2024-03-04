@@ -142,6 +142,7 @@ public interface MemberRepository extends JpaRepository<Member, String> {
 	// => Jno 별 Member 출력하기
 	// => findById 지원을 해주는 반면, findByJno 는 지원을 하지 않음
 	// => 인터페이스 안에 만들어 준것.
+	// => 바람직 함 -> 코드를 줄 일 수 있음.
 	List<Member> findByJno(int jno);
 
 	// 2) @Query선언을 이용한 직접쿼리 선언 => 바로 옆에 SQL 문을 작성하여 활용.
@@ -167,4 +168,14 @@ public interface MemberRepository extends JpaRepository<Member, String> {
 			+ "FROM Member m LEFT JOIN Jo j ON m.jno=j.jno order by m.jno")
 	List<MemberDTO> findMemberJoin();
 
+	/*
+	 * => 사용 불가능함
+	 * 
+	 * @Query(nativeQuery=true,
+	 * value="select m.id, m.name, m.jno, j.jname, j.project " +
+	 * "FROM Member m LEFT JOIN Jo j ON m.jno=j.jno order by m.jno") List<MemberDTO>
+	 * findMemberJoin();
+	 */
+
+	// 4) QueryDSL
 }
