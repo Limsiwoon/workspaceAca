@@ -78,7 +78,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 		try {
 			// 1) request 에서 토큰 가져오기.
-			String token = parseBearerToken(request);
+			String token = parseBearerToken(request);  //아래에 메서드 구현해놓음
 			log.info("** TokenProvider.java, doFilterInternal(), token 확인=> "+token);
 			
 			if (token != null && !token.equalsIgnoreCase("null")) {
@@ -111,6 +111,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 								// => 인증된 사용자정보, 모든 객체형 사용가능 
 								//   (보통은 스프링에서 제공하는 interface UserDetails 를 사용하기도함) 
 								// => 컨트롤러에서 @AuthenticationPrincipal 로 제공받음
+								//	 (AuthController 의 userDetail() 에서 확인) 	
 								null, // Password를 의미하며 보통은 null 로 처리
 								AuthorityUtils.NO_AUTHORITIES // 권한없음
 				);
@@ -132,7 +133,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 		filterChain.doFilter(request, response);
 
-	}
+	} //doFilterInternal
 
 	// ** Bearer Token
 	// => HTTP통신에서 사용하는 인증 방식에 Bearer Authentication을 사용하는 것이다.

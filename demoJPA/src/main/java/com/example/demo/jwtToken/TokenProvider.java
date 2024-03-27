@@ -7,17 +7,16 @@ import java.util.Date;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Member;
-//import com.sun.org.apache.xml.internal.security.algorithms.SignatureAlgorithm;
 
 // => dependency 추가 필요함
-import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Claims; 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 // ** 토큰 기반 인증 방식 ***************************************
-// => 쿠키는 사용자 인증정보를 담아 HTTP통신을 하게 되면, 제3자가 악의적인 공격으로 데이터를 엿볼수 있다.
+// => 쿠키는 사용자 인증정보를 담아 HTTP통신을 하게되면, 제3자가 악의적인 공격으로 데이터를 엿볼수 있다.
 //    세션은 쿠키보다 보안성이 강하지만, 세션ID에 대해 서버가 내부적으로 스토리지를 보유하고 있어야한다는 단점이 있다.
-//    따라서 쿠키나 세션이 아닌 토큰 기반 인증 방식을 통하게 되면 더욱 보안성이 강하고 효율적이다.
+//    따라서 쿠키나 세션이 아닌 토큰 기반 인증방식을 통하게 되면 더욱 보안성이 강하고 효율적이다.
 
 // => JWT 와 Oauth 인증방식 이 대표적이다.
 // => OAuth(Open Authorization)
@@ -30,7 +29,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 // ** JWT (JSON Web Token) ********************************** 
 // => JSON 형태로 된 토큰이며 {header}.{payload}.{signature} 로 구성됨.
-// => 토큰(Token) : 사용자를 구별할 수 있는 문자열 
+// => 토큰(Token) : 사용자를 구별할수 있는 문자열 
 // => 기본 동작
 //	- 최초 로그인시 서버가 만들어줌 
 //	- 클라이언트는 이후 매요청에 이 토큰을 담아 인증된 사용자임을 알린다.  
@@ -93,36 +92,41 @@ public class TokenProvider {
 	// 1. JWT Token 생성
 	public String create(Member entity) {
 		// 1.1) 유효기한 설정
-		// - 현재시간 으로부터 1일로 설정
-		// ( 현재시간 으로부터 차이가 +1일 되는 날 설정 )
-		Date expiryDate = Date.from(Instant.now() // 현재 시간
-				.plus(1, ChronoUnit.DAYS));
-
-		// 1.2) Jwts(JWT 관리 API) 클래스로 토큰 생성 보관
-		// => JSON 생성, 서명, 인코딩, 디코딩, 파싱 등 토큰관리 기능 제공.
+		//	- 현재시간 으로부터 1일로 설정
+		//	( 현재시간 으로부터 차이가 +1일 되는 날 설정 )
+		Date expiryDate = Date.from(
+						Instant.now() // 현재 시간
+						.plus(1, ChronoUnit.DAYS));  
+						//=> 일(Day) 의 차이가 1 이되는 값을의미
+		
+		// 1.2) Jwts(JWT 관리 API) 클래스로 토큰 생성 보관  
+		//=> JSON 생성, 서명, 인코딩, 디코딩, 파싱 등 토큰관리 기능 제공.
 		return Jwts.builder()
-
-				// => header에 들어갈 내용 및 서명을 하기 위한 SECRET_KEY
-				.signWith(SignatureAlgorithm.HS512, SECRET_KEY)
-
-				// => payload에 들어갈 내용
-				.setSubject(entity.getId()) // sub: subject(유일해야함->userID 보관)
-				.setIssuer("demo app") // iss: Issuer, 발급 주체
-				.setIssuedAt(new Date()) // iat: Issued At, 토큰 발급시간
-				.setExpiration(expiryDate) // exp: Expiration, 토큰 만료시간
-				.compact();
+				
+			// => header에 들어갈 내용 및 서명을 하기 위한 SECRET_KEY
+			.signWith(SignatureAlgorithm.HS512, SECRET_KEY)
+			
+			// => payload에 들어갈 내용
+			.setSubject(entity.getId())  // sub: subject(유일해야함->userID 보관)
+			.setIssuer("demo app") 	   // iss: Issuer, 발급 주체
+			.setIssuedAt(new Date())   // iat: Issued At, 토큰 발급시간
+			.setExpiration(expiryDate) // exp: Expiration, 토큰 만료시간
+			.compact();
 	}
 
 	// 2. 검증
-	// => 토큰을 디코딩 및 파싱 하여 토크의 위조여부 확인 후
+	// => 토큰을 디코딩 및 파싱 하여 토크의 위조여부 확인 후 
 	// => subject 에 보관한 userID 를 꺼내어 return
 	public String validateAndGetUserId(String token) {
 		// parseClaimsJws메서드가 Base 64로 디코딩 및 파싱.
 		// 즉, 헤더와 페이로드를 setSigningKey로 넘어온 시크릿을 이용해 서명 후, token의 서명 과 비교.
 		// 위조되지 않았다면 페이로드(Claims) 리턴
 		// 그 중 우리는 user의 id가 필요하므로 getBody를 부른다.
-		Claims claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+		Claims claims = Jwts.parser()
+						.setSigningKey(SECRET_KEY)
+						.parseClaimsJws(token)
+						.getBody();
 
 		return claims.getSubject();
 	}
-} // class
+} //class
